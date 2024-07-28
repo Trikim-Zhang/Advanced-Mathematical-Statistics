@@ -1,0 +1,293 @@
+\chapter{5道课后习题}
+\section{第一章课后习题}
+\begin{example}
+    1.27 设 $X_1 \sim Ga(\alpha_1,\lambda),X_2\sim Ga(\alpha_2,\lambda) $，且$ X_1$ 与 $X_2$ 独立，证明：
+
+    (1)$ Y_1=X_1+X_2 与 Y_2=X_1/(X_1+X_2)$ 独立，且 $Y_2 \sim Be(\alpha_1,\alpha_2)$ ；
+
+    (2) $Y_1=X_1+X_2 与 Y_3=X_1/X_2$ 独立，且 $Y_3 \sim Z(\alpha_1,\alpha_2)$ .
+    
+    \textbf{证}：
+
+    (1)
+    \begin{enumerate}[A.]
+        \item 由 $X_1 \sim Ga(\alpha_1,\lambda),X_2\sim Ga(\alpha_2,\lambda)$ 知：
+        \begin{enumerate}[a]
+            \item $X_1,X_2 $的联合分布为 
+            \[
+                p_{X_1,X_2}(x_1,x_2)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{x_1}^{\alpha_1-1}e^{-\lambda x_1}{x_2}^{\alpha_2-1}e^{-\lambda x_2}.
+            \]
+            \item $Y_1=X_1+X_2 \sim Ga(\alpha_1+\alpha_2,\lambda)$ ，即 
+            \[
+                p_{Y_1}(y_1)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1+\alpha_2)}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1}
+            \]
+        \end{enumerate}
+        \item 令 $U=X_1,V=\dfrac{X_1}{X_1+X_2}$ ，则 
+        \[
+            \left\{ \begin{array}{ll} X_{1}=U \\ X_{2}=U/V-U \end{array}\right.,
+        \]
+        且变换的行列式为 
+        \[
+            J= \left | \begin{array}{ccc} 1 & 0 \\ 1/v-1 & -u/v^2 \end{array} \right |=-\dfrac{u}{v^2}.
+        \]
+        $U,V$ 的联合分布为： 
+        \[
+            \begin{aligned} p_{U,V}(u,v)&=p_{X_1,X_2}(u,v)|J| \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}u^{\alpha_1-1}e^{-\lambda u}(\dfrac{u}{v}-u)^{\alpha_2-1}e^{-\lambda (u/v-u) }\dfrac{u}{v^2}, \end{aligned}
+        \]
+        
+        则$ V$ 的边缘分布为： 
+        \[
+            p_{V}(v)=\int_0^{\infty} p_{U,V}(u,v)du=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}v^{\alpha_1-1}(1-v)^{\alpha_2-1},
+        \]
+        即 $Y_2 \sim Be(\alpha_1,\alpha_2) .$
+        \item 以下求 $Y_1,Y_2$ 的联合分布.
+
+        令 $U=X_1+X_2,V=\dfrac{X_1}{X_1+X_2}$ ，则 
+        \[
+            \left\{ \begin{array}{ll} X_{1}=UV \\ X_{2}=U-UV \end{array}\right., 
+        \]
+        且变换的行列式为 
+        \[
+            J= \left | \begin{array}{ccc} v & u \\ 1-v & -u \end{array} \right |=-u. 
+        \]
+        $U,V $的联合分布为：
+        \[
+            \begin{aligned} p_{U,V}(u,v)&=p_{X_1,X_2}(u,v)|J| \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{u}^{\alpha_1+\alpha_2-1}e^{-\lambda u} {v}^{\alpha_1-1}(1-v)^{\alpha_2-1}. \end{aligned}
+        \]
+        \item 由
+        \begin{enumerate}[a]
+            \item
+            \[
+                p_{Y_1,Y_2}(y_1,y_2)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\cancel{\Gamma(\alpha_1+\alpha_2)}}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1}\dfrac{\cancel{\Gamma(\alpha_1+\alpha_2)}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{y_2}^{\alpha_1-1}(1-y_2)^{\alpha_2-1},
+            \]
+            \item 
+            \[
+                p_{Y_1}(y_1)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1+\alpha_2)}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1}, 
+            \] 
+            \item  
+            \[
+                p_{Y_2}(y_2)=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{y_2}^{\alpha_1-1}(1-{y_2})^{\alpha_2-1},
+            \]
+            显然有 $p_{Y_1,Y_2}(y_1,y_2)=p_{Y_1}(y_1)p_{Y_2}(y_2)$ ，独立性得证.
+        \end{enumerate}
+    \end{enumerate}
+    
+    (2)
+    \begin{enumerate}[A.]
+        \item 令$ U=X_1,V=\dfrac{X_1}{X_2}$ ，则 
+        \[
+            \left\{ \begin{array}{ll} X_{1}=U \\ X_{2}=U/V \end{array}\right.
+        \]
+        ，且变换的行列式为 
+        \[
+            J= \left | \begin{array}{ccc} 1 & 0 \\ 1/v & -u/v^2 \end{array} \right |=-\dfrac{u}{v^2}.
+        \]
+        $U,V $的联合分布为： 
+        \[
+            \begin{aligned} p_{U,V}(u,v)&=p_{X_1,X_2}(u,v)|J| \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}u^{\alpha_1-1}e^{-\lambda u} \left(\dfrac{u}{v} \right)^{\alpha_2-1}e^{-\lambda u/v }\dfrac{u}{v^2}. \end{aligned}
+        \]
+        则$ V$ 的边缘分布为： 
+        \[
+            p_{V}(v)=\int_{0}^{\infty} p_{U,V}(u,v)du=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\dfrac{v^{\alpha_1-1}}{(1+v)^{\alpha_1+\alpha_2}},
+        \]
+
+        即 $Y_3 \sim Z(\alpha_1,\alpha_2) .$
+        \item 令 $U=X_1+X_2,V=\dfrac{X_1}{X_2}$ ，则 
+        \[
+            \left\{ \begin{array}{ll} X_{1}={UV}/{(1+V)} \\ X_{2}={U}/{(1+V)} \end{array}\right.
+        \]
+        ，且变换的行列式为 
+        \[
+            J= \left | \begin{array}{ccc} v/(1+v) & u/{(1+v)^2} \\ 1/(1+v) & -u/{(1+v)^2} \end{array} \right |=-\dfrac{u}{(1+v)^2}. 
+        \]
+        $U,V $的联合分布为：
+        \[
+            \begin{aligned} p_{U,V}(u,v)&=p_{X_1,X_2}(u,v)|J| \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\left(\dfrac{uv}{1+v} \right)^{\alpha_1-1}e^{-\lambda \frac{uv}{1+v} } \left(\dfrac{u}{1+v} \right)^{\alpha_2-1}e^{-\lambda \frac{u}{1+v}}\dfrac{u}{(1+v)^2}\\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}u^{\alpha_1+\alpha2-1}e^{-\lambda u } \dfrac{v^{\alpha_1-1}}{(1+v)^{\alpha_1+\alpha_2}}. \end{aligned}
+        \]
+        \item 由
+        \begin{enumerate}[a]
+            \item
+            \[
+                \begin{aligned} p_{Y_1,Y_3}(y_1,y_3)&={y_3}^{\alpha_1-1}(1-y_3)^{\alpha_2-1} \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\cancel{\Gamma(\alpha_1+\alpha_2)}}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1} \dfrac{\cancel{\Gamma(\alpha_1+\alpha_2)}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\dfrac{y_3^{\alpha_1-1}}{(1+y_3)^{\alpha_1+\alpha_2}}, \end{aligned} 
+            \]
+            \item 
+            \[
+                p_{Y_1}(y_1)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1+\alpha_2)}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1},
+            \]
+            \item 
+            \[
+                p_{Y_3}(y_3)=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\dfrac{y_3^{\alpha_1-1}}{(1+y_3)^{\alpha_1+\alpha_2}},
+            \]
+            显然有 $p_{Y_1,Y_3}(y_1,y_3)=p_{Y_1}(y_1)p_{Y_3}(y_3)$ ，独立性得证.
+        \end{enumerate}
+    \end{enumerate}
+\end{example}
+\begin{example}
+    1.36  设 $X_1,\cdots,X_n$ 是来自总体分布函数 $F(x)$ 的一个样本， $F(x)$ 为其经验分布函数 
+    \[
+        F_{n}(x)=\dfrac{1}{n}\sum \limits _{i=1}^{n}I_{\{X_i \leqslant x\}}
+    \]
+    
+    证明： 
+    \[
+        \sqrt{n}[F_{n}(x)-F(x)] \xrightarrow{L} N(0,F(x)[1-F(x)]).
+    \]
+
+    \textbf{证明}：
+    记： 
+    \[
+        \begin{aligned} G_n=\sqrt{n}[F_{n}(x)-F(x)]&=\sqrt{n}\left[\dfrac{1}{n}\sum \limits _{i=1}^{n}I_{\{X_i \leqslant x\}}-F(x)\right] \\ &=\sum \limits _{i=1}^{n}\dfrac{I_{\{X_i \leq x\}}-F(x)}{\sqrt{n}}=\sum \limits _{i=1}^{n} g_n(X_i),\end{aligned}
+    \]
+    则 
+    \[
+        \text{E}[g_n(X_i)]=\text{E}\left[\dfrac{I_{\{X_i \leqslant x\}}-F(x)}{\sqrt{n}}\right]=\dfrac{\text{E}I_{\{X_i \leqslant x\}}-F(x)}{\sqrt{n}}=0 ，
+    \]
+
+    且$\text{Var}[g_n(X_i)]=\text{Var}\left[\dfrac{I_{\{X_i \leqslant x\}}-F(x)}{\sqrt{n}}\right]=\dfrac{F(x)[1-F(x)]}{n}<\infty .$
+
+    故$ \text{E}(G_n)=0 $，且 $\text{Var}(G_n)=F(x)[1-F(x)]$ ，由中心极限定理可知： $\frac{G_n-0}{\sqrt{F(x)[1-F(x)]}} \xrightarrow{L} N(0,1)$, 
+    
+    故有 $\sqrt{n}[F_{n}(x)-F(x)] \xrightarrow{L} N(0,F(x)[1-F(x)]) $. 命题得证.
+\end{example}
+\section{第二章课后习题}
+\begin{example}
+    2.1 设 $X_1,X_2$ 独立同分布，其共同的密度函数为 $p(x;\theta)=3x^2/\theta^3,\;0<x<\theta,\; \theta>0.$
+
+    (1) 证明 $T_1=\frac{2}{3}(X_1+X_2)$ 和 $T_2=\frac{7}{6} \max(X_1,X_2)$ 都是$ \theta $的无偏估计；
+
+    (2) 计算 $T_1$ 和 $T_2$ 的均方误差并进行比较；
+
+    (3) 证明：在均方误差意义下，在形如 $T_c=c \max(X_1,X_2)$ 的估计中， $T_{8/7}$ 最优.
+
+    解：
+
+    (1) 由
+    \[
+        \text{E}(X_1)=\text{E}(X_2)=\int_{0}^{\theta}x\frac{3x^2}{\theta^3}dx=\frac{1}{\theta^3}\left[ \frac{3}{4}x^4\right]^{\theta}_{0}=\frac{3}{4}\theta
+    \]
+
+    得 $\text{E}(T_1)=\frac{2}{3}\text{E}(X_1)+\frac{2}{3}\text{E}(X_2)=\frac{2}{3} \cdot \frac{3}{4}\theta \cdot 2= \theta.$
+
+    令$ Y=\max(X_1,X_2)$ ，因为 
+    \[
+        P(Y \leqslant y)=P(X_1 \leqslant y)P(X_2 \leqslant y)=P^2(X_1 \leqslant y)
+    \]
+    且有 
+    \[
+        P(X_1 \leqslant y)=\int_{0}^{y}3x^2/\theta^3dx=\frac{y^3}{\theta^3}
+    \] ，故 $p_Y(y)=[P^2(X_1 \leqslant y)]'=\dfrac{6y^5}{\theta^6},$
+
+    则 
+    \[
+        \text{E}(Y)=\int_{0}^{\theta} y \frac{6y^5}{\theta^6} dy= \frac{1}{\theta^6}\left[ \frac{6}{7}y^7 \right]_0^{\theta}= \frac{6}{7}\theta. 故 \text{E}(T_2)=\frac{7}{6}\text{E}(Y)=\theta . 
+    \]证毕.
+
+    (2) 由 
+    \[
+        \text{E}(X_1^2)=\text{E}(X_2^2)=\int_{0}^{\theta}x^2\frac{3x^2}{\theta^3}dx=\frac{1}{\theta^3}\left[ \frac{3}{5}x^5\right]^{\theta}_{0}=\frac{3}{5}\theta^2
+    \]
+
+    得 
+    \[
+        \text{Var}(X_1)=\text{Var}(X_2)=\text{E}(X_1^2)-\text{E}^2(X_1)=\frac{3}{5}\theta^2-\left[ \frac{3}{4}\theta \right]^2=\frac{3}{80}\theta^2
+    \]
+    故 
+    \[
+        \text{Var}(T_1)=\frac{4}{9}\text{Var}(X_1)+\frac{4}{9}\text{Var}(X_2)=\frac{4}{9} \cdot \frac{3}{80}\theta^2 \cdot 2=\frac{1}{30}\theta^2.
+    \]
+
+    由 
+    \[
+        \text{E}(Y^2)=\int_{0}^{\theta}y^2\frac{6y^5}{\theta^6}dy=\frac{1}{\theta^6}\left[ \frac{6}{8}y^8\right]^{\theta}_{0}=\frac{3}{4}\theta^2
+    \]
+
+    得 
+    \[
+        \text{Var}(Y)=\text{E}(Y^2)-\text{E}^2(Y)=\frac{3}{4}\theta^2-\left[ \frac{6}{7}\theta \right]^2=\frac{3}{4 \cdot 49}\theta^2,
+    \]
+
+    故$ \text{Var}(T_2)=\frac{49}{36}\text{Var}(Y)=\frac{1}{48}\theta^2.$
+
+    故有 
+    \[
+        \text{MSE}(T_1)=\text{Var}(T_1)=\frac{1}{30}\theta^2>\frac{1}{48}\theta^2=\text{Var}(T_2)=\text{MSE}(T_2).
+    \]
+
+    (3) 由 $\text{E}(T_c)=c\text{E}(Y)$，有
+
+    \[
+        \begin{aligned} \text{MSE}(T_c)&=\text{E}(T_c-\theta)^2=\text{Var}(T_c)+\text{E}^2(T_c-\theta) \\ &=c^2\text{Var}(Y)+[c\text{E}(Y)-\theta]^2 \\ &=c^2\frac{3}{4 \cdot 49}\theta^2 +[c \frac{6}{7}\theta-\theta]^2 \\ &=\left[ \frac{3}{4 \cdot 49}c^2+ \left( \frac{6}{7}c -1 \right)^2\right] \theta^2 \\ &=\left[ \frac{3}{4}c^2-\frac{12}{7}c+1 \right] \theta^2, \end{aligned} 
+    \]
+     故当 $c=-\frac{-\frac{12}{7}}{2\cdot\frac{3}{4}}=\frac{8}{7}$ 时，上述 $\text{MSE}(T_c)$ 取得最小值 $\frac{1}{49}\theta^2 $. 证毕.
+\end{example}
+\begin{example}
+    2.11 设 $X_{1}, \cdots, X_{n}$ 是来自均值为 $\mu$ ，方差为 $\sigma^{2}$ 的分布的一个样本， $\mu, \sigma^{2}$ 均未知，考虑 $\mu$ 的线性无偏估计类
+    $\mathscr{L}_{\theta}=\left\{T(X): T(X)=\sum_{i=1}^{n} c_{i} X_{i}\right\}.$
+
+    (1) 证明：$T(X)$ 为 $\mu$ 的无偏估计的充要条件是 $\sum c_{i}=1$ ；
+    
+    (2) 证明： $\bar{X}$ 在线性无偏估计类中方差一致达到最小.
+
+    证明：
+
+    (1) 由 $T(X)$ 为 $\mu$ 的无偏估计，则 $\text{E}(T(X))=\mu$ .
+
+    由 $X_{1}, \cdots, X_{n}$ 同分布知 $\text{E}(T(X))=\left(\sum_{i=1}^{n} c_{i}\text{E}T(X_i)\right) =\mu\sum_{i=1}^{n} c_{i}$
+
+    对于任意的 $\mu \in R$ ， $\mu \sum_{i=1}^{n} c_{i} =\mu \; \Leftrightarrow \; \sum_{i=1}^{n} c_{i}=1$ ，故得证.
+
+    (2) 对于任意的 $T(X) \in \mathscr{L}_{\theta}$ ，由 $X_{1}, \cdots, X_{n}$ 独立同分布知
+
+    \[
+        \text{Var}(T(X))=\sum_{i=1}^{n} c_{i}^{2} \text{Var}\left(X_{i}\right)=\sigma^{2}\sum_{i=1}^{n} c_{i}^{2}.  
+    \]
+
+    根据Cauchy-shcwarz不等式可得， 
+    \[
+        \left|\sum_{i=1}^{n} c_{i}\right|^{2} \leqslant \sum_{i=1}^{n} c_{i}^{2} \cdot \sum_{i=1}^{n} 1^{2},  
+    \]
+
+    当且仅当 $c_{1}=c_{2}=\cdots=c_{n}$ 时上式取等号. 又由 (1) 知 $\sum_{i=1}^{n} c_{i}=1$ ，所以当 $c_{i}=\frac{1}{n}, i=1, \cdots, n$ 即 $T(X)=\bar{X} 时 \text{Var}(T(X))$ 最小，命题得证.
+
+    注：(2) 问本质上是条件极值问题，即 
+    \[
+        \begin{aligned} \left\{\begin{array}{l} \min \; \sum \limits _{i=1}^{n} c_{i}^{2} \\ \text{s.t.} \; \sum \limits_{i=1}^{n} c_{i}=1 \end{array}\right. \end{aligned}  
+    \]
+
+    由拉格朗日乘数法，令 $L=\sum_{i=1}^{n} c_{i}^{2}+\lambda\left(\sum_{i=1}^{n} c_{i}-1\right)$ ，则
+    \[
+        \begin{aligned} \left\{\begin{array}{l} \frac{\partial L}{\partial c_{i}}=0, i=1,2, \cdots, n \\ \frac{\partial L}{\partial \lambda}=0 \end{array} \Rightarrow\left\{\begin{array}{l} c_{i}=\frac{1}{n}, i=1,2, \cdots, n \\ \lambda=-\frac{2}{n} \end{array}\right.\right. \end{aligned}    
+    \]
+    即证得 $T(X)=\bar{X}$ 在线性无偏类中方差一致达到最小.
+\end{example}
+\section{第三章课后习题}
+\begin{example}
+    3.1 电话交换台单位时间内接到的呼唤次数服从Poisson分布$ P(\lambda) , \lambda>0 .$ $\lambda $为单位时间内接到的平均呼唤次数. 设$ x=(x_1,\cdots,x_{10}) $是该电话交换台的10次记录. 考虑假设检验问题：原假设$ H_{0}: \lambda \geqslant 1 $对备择假设$ H_{1}: \lambda<1 . $取水平为$ \alpha=0.05 .$
+
+    解：
+    取检验统计量为$ \lambda$ 的完备充分统计量$ T(x)=\sum_{i=1}^{n} x_{i} .$
+
+    对于$ H_{0}: \lambda \geqslant 1$ 和 $H_{1}: \lambda<1$ ，其拒绝域为$ W=\left\{x: \sum_{i=1}^{n} x_{i} \leqslant c\right\} $，
+
+    检验函数为：
+    \[
+        \phi(x)=\left\{\begin{array}{ll}1, & T(x)<c, \\ r, & T(x)=c, \\ 0, & T(x)>c.\end{array}\right.
+    \]
+
+    势函数为： 
+    \[
+        g(\lambda)=\text{P}_{\lambda}(x \in W)=\sum_{k=0}^{c-1} \frac{(n\lambda)^k}{k !}e^{-n\lambda}+r \frac{(n\lambda)^{c}}{c!} e^{-n \lambda}
+    \]
+
+    当 $n=10$ ， $\lambda=1$ 时，由 
+    \[
+        \left\{\begin{array}{l}\sum_{k=0}^{4} \frac{(n \lambda)^{k} }{k !}e^{(-n\lambda)}=0.02921 \\ \sum_{k=0}^{5} \frac{(n \lambda)^{k}}{k !}e^{(-n\lambda)}=0.06704 \end{array}\right.
+    \]
+    得 $c=5$ .
+
+    即 $\sum_{k=0}^{4} \frac{(n \lambda)^{k} e^{(-n \lambda)}}{k !}+r \frac{(n \lambda)^{c}}{c !} e^{-n \lambda}=0.05$ ，解得$ r=0.5496 .$
+    故检验函数为： 
+    \[
+    \phi(x)=\left\{\begin{array}{ll}1, & T(x)<c, \\ 0.5496, & T(x)=c, \\ 0, & T(x)>c.\end{array}\right. 
+    \]
+\end{example}
