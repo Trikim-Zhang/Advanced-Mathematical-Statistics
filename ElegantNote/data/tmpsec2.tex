@@ -1,0 +1,218 @@
+\begin{example}
+    电话交换台单位时间内接到的呼唤次数服从Poisson分布$ P(\lambda) , \lambda>0 .$ $\lambda $为单位时间内接到的平均呼唤次数. 设$ x=(x_1,\cdots,x_{10}) $是该电话交换台的10次记录. 考虑假设检验问题：原假设$ H_{0}: \lambda \geqslant 1 $对备择假设$ H_{1}: \lambda<1 . $取水平为$ \alpha=0.05 .$
+
+解：
+取检验统计量为$ \lambda$ 的完备充分统计量$ T(x)=\sum_{i=1}^{n} x_{i} .$
+
+对于$ H_{0}: \lambda \geqslant 1$ 和 $H_{1}: \lambda<1$ ，其拒绝域为$ W=\left\{x: \sum_{i=1}^{n} x_{i} \leqslant c\right\} $，
+
+检验函数为：
+\[
+    \Phi(x)=\left\{\begin{array}{ll}1, & T(x)<c, \\ r, & T(x)=c, \\ 0, & T(x)>c.\end{array}\right.
+\]
+
+势函数为： 
+\[
+    g(\lambda)=\text{P}_{\lambda}(x \in W)=\sum_{k=0}^{c-1} \frac{(n\lambda)^k}{k !}e^{-n\lambda}+r \frac{(n\lambda)^{c}}{c!} e^{-n \lambda}
+\] ，
+
+当 $n=10$ ， $\lambda=1$ 时，由 
+\[
+    \left\{\begin{array}{l}\sum_{k=0}^{4} \frac{(n \lambda)^{k} }{k !}e^{(-n\lambda)}=0.02921 \\ \sum_{k=0}^{5} \frac{(n \lambda)^{k}}{k !}e^{(-n\lambda)}=0.06704 \end{array}\right.
+\]
+得 c=5 .
+
+即 $\sum_{k=0}^{4} \frac{(n \lambda)^{k} e^{(-n \lambda)}}{k !}+r \frac{(n \lambda)^{c}}{c !} e^{-n \lambda}=0.05$ ，解得$ r=0.5496 .$
+故检验函数为： 
+\[
+\Phi(x)=\left\{\begin{array}{ll}1, & T(x)<c, \\ 0.5496, & T(x)=c, \\ 0, & T(x)>c.\end{array}\right. 
+\]
+\end{example}
+\begin{example}
+    设$ X=\left(X_{1}, \cdots, X_{n}\right) $是来自正态分布族$ \{N(0, \sigma^{2}): 0<\sigma^{2}<\infty\} $的样本，考虑原假设 $H_{0}: \sigma^{2}=1 $对备择假设 $H_{1}: \sigma^{2}=\sigma_{1}^{2}(\sigma_{1}^{2}>1)$ 的检验问题，取水平为 $\alpha(0<\alpha<1)$ ，试求其MPT.
+
+    解：
+
+    密度函数： $p(x;\sigma^2)=(2\pi)^{-1/2}\sigma^{-1} \exp\{ {x^2}/{(2\sigma^2)} \}$ ，
+
+    似然函数： $L(x;\sigma^2)=(2\pi)^{-n/2}\sigma^{-n}\exp\{ -\sum_{i=1}^{n}{x_i^2}/{(2\sigma^2)} \}$ ，
+
+    由因子分解定理知，$ T(x)=\sum_{i=1}^{n} x_{i}^{2}$ 为该分布的完备充分统计量.
+
+    构造似然比统计量： 
+    \[
+        \begin{aligned} \lambda(x)&=\frac{\prod_{i=1}^{n} p\left(x_{i} ; \sigma_{1}^{2}\right)}{\prod_{i=1}^{n} p\left(x_{i} ; \sigma_{0}^{2}\right)}=\frac{\sigma_{0}^{n}}{\sigma_{1}^{n}} \exp \left\{ \sum_{i=1}^{n} x_{i}^{2}\left(\frac{1}{2 \sigma_{0}^{2}}-\frac{1}{2 \sigma_{1}^{2}}\right) \right\} \\ &=\frac{\sigma_{0}^{n}}{\sigma_{1}^{n}} \exp \left\{ T(x)\left(\frac{1}{2 \sigma_{0}^{2}}-\frac{1}{2 \sigma_{1}^{2}}\right) \right\}, \end{aligned}
+    \]
+     $\lambda(x)$ 关于 $T(x)$ 严格单调上升，根据N-P基本引理，MPT的拒绝域形式为 $W=\{x: T(x)=\sum_{i=1}^{n} x_{i}^{2} \geqslant c\}.$
+
+     当 $H_{0}$ 成立时，$ T \sim \chi^{2}(n) $, 所以对给定的水平 $\alpha$ ， $c=\chi_{1-\alpha}^{2}(n) .$
+
+    MPT检验仅与水平 $\alpha$ 有关，而与$ \sigma_{1}^2 $的具体数值无关，只要求 $\sigma_{1}^2>1$ 就行了.
+
+    故MPT为： 
+    \[
+        \phi(x)=\left\{\begin{array}{ll} 1, & T \geqslant \chi_{1-\alpha}^{2}(n), \\ 0, & T<\chi_{1-\alpha}^{2}(n). \end{array}\right.
+    \]
+\end{example}
+
+
+% 3.3 设 X=\left(X_{1}, \cdots, X_{n}\right) 是来自均匀分布族 \{R(0,\theta):\theta>0\} 的样本，考虑原假设 H_{0}: \theta=1 对备择假设 H_{1}: \theta=\theta_1(\theta_1<1) 的检验问题，取水平为 \alpha(0<\alpha<1) ，试求其MPT.
+
+% 解：
+
+% 同例3.3，依葫芦画瓢.
+
+% 构造似然比统计量 \lambda(x)=\frac{\prod_{i=1}^{n} p\left(x_{i} ; \theta_{1}\right)}{\prod_{i=1}^{n} p\left(x_{i} ;1\right)}= \left\{ \begin{array}{ll} \theta_1^{-n}, & 0 < x_{(n)} \leqslant \theta_1\\ 0, & \theta_1 < x_{(n)} \leqslant 1 \end{array} \right.
+
+% 其中 x_{(n)}=\max\{x_1,\cdots,x_n\} 是次序统计量.
+
+% 检验的拒绝域应该为 W=\left\{x_{(n)}: 0<x_{(n)} \leqslant c \right\} ，
+
+% 故可取非随机化检验 \phi(x)=\left\{\begin{array}{ll} 1, & 0 < x_{(n)} \leqslant c \\ 0, & c < x_{(n)} \leqslant \theta_1 \end{array}\right.
+
+% 由于在原假设 H_{0}: \theta=1 成立时 p(t)=nt^{n-1}(0<t<1) ，故由 \text{E}[\phi(X)|\theta=1]=\alpha 得 c=\alpha^{1/n} ，即MPT为 \phi(x)=\left\{\begin{array}{ll} 1, & 0 < x_{(n)} \leqslant \alpha^{1/n} \\ 0, & \alpha^{1/n} < x_{(n)} \leqslant \theta_1 \end{array}\right. \\ 注：第3.3节说明 \phi(x)=\left\{\begin{array}{ll} 1, & 0 < x_{(n)} \leqslant \alpha^{1/n} \\ 0, & \alpha^{1/n} < x_{(n)} \end{array}\right. \\ 这是原假设 H_{0}: \theta \geqslant 1 对备择假设 H_{0}: \theta < 1 一个UMPT，它不依赖于 \theta_1 ，只需要 \theta_1<1 即可.
+
+%     3.4 （N-P基本引理的补遗）设 P_{\theta_{0}} 和 P_{\theta_{1}} 是可测空间 (\mathscr{X}, \mathscr{B}) 上的两个不同的概率测度，关于某个 \sigma 有限的测度 \mu ，有
+%     p(x ; \theta_{0})=\frac{d P_{\theta_{0}}}{d \mu}, \; p(x ; \theta_{1})=\frac{d P_{\theta_{1}}}{d \mu} \\ 则在检验问题(3.9)“简单原假设 H_0:\theta=\theta_0 对简单备择假设 H_1:\theta=\theta_1 (\theta_0 \neq \theta_1) ”中，如果 \phi(x) 是水平为 \alpha 的MPT，则它不一定满足(3.10)式 \text{E}_{\theta_{0}} \phi(X)=\alpha ，但在 \text{E}_{\theta_{1}} \phi(X)<1 的时候，它必满足(3.10)式.
+
+% 证：
+
+% 若 \phi(x) 是水平为 \alpha 的MPT，由MPT的定义和定理3.3知， \text{E}_{\theta_{1}} \phi(X) \geqslant \alpha \geqslant\text{E}_{\theta_{0}} \phi(X) .
+
+% 若 \text{E}_{\theta_{1}} \phi(X) \geqslant1 ，则 \text{E}_{\theta_{1}} \phi(X) \geqslant 1> \alpha \geqslant\text{E}_{\theta_{0}} \phi(X) ，的确不一定满足(3.10).
+
+% 但当 \text{E}_{\theta_{1}} \phi(X)<1 时，设 \phi(X) 不满足(3.10)式，则有 \text{E}_{\theta_{0}} \phi(X)<\alpha ，
+
+% 此时可以扩大拒绝域W，即存在检验函数 \phi^{*}(X) ，使得 \text{E}_{\theta_{0}} \phi^{*}(X)=\alpha ，
+
+% 则立有 \alpha =\text{E}_{\theta_{1}} \phi^{*}(X)>\text{E}_{\theta_{1}} \phi(X) ，这与 \phi(X) 是水平为 \alpha 的MPT矛盾，
+
+% 故证得 \text{E}_{\theta_{0}} \phi(X)=\alpha.
+
+%     3.5 设样本 X=\left(X_{1}, \cdots, X_{100}\right) 来自二点分布族 \{b(1, p): 0 \leqslant p \leqslant 1 \} . 试求检检问题： H_{0}: p \leqslant 0.01 对 H_{1}: p>0.01 的水平 \alpha=0.05 的UMPT.
+
+% 解：
+
+% 两点分布族的概率密度函数： f(x)=p^x(1-p)^{1-x} ，
+
+% 似然函数： L=p^{\sum_{i=1}^{100}{x_i}}(1-p)^{n-\sum_{i=1}^{100}{x_i}} ，
+
+% 由因子分解定理得 T(x)=\sum_{i=1}^{100}{x_i} 是充分统计量，又 L=(1-p)^{n}\left( \frac{p}{1-p} \right)^{\sum_{i=1}^{100}{x_i}}=(1-p)^{n}\exp \left\{ T(x) \ln \left(\frac{p}{1-p} \right) \right\} \\ 且 Q(p)=\ln \left(\frac{p}{1-p} \right) 关于 p 是严格增函数，故它关于 T(x) 具有非降MLR.
+
+% 记 \theta_0=0.01 . 由定理3.8，对于单边假设检验问题(I)：H_{0}: p \leqslant 0.01 对 H_{1}: p>0.01 ，存在水平为 \alpha=0.05 的UMPT的检验函数 \phi(T(x))= \left\{ \begin{array}{ll} 1, & T(x)>c, \\ r, & T(x)=c, \\ 0, & T(x)<c. \end{array} \right. \\ 其中常数 r ( 0\leqslant r \leqslant 1 )和 c 由 \text{E}_{\theta_{0}} \phi(T(X))=\alpha 确定，即
+
+% \text{P}_{\theta_0}(T(X)>c) \leqslant \alpha \leqslant \text{P}_{\theta_0}(T(X) \geqslant c) , \; r=\frac{\alpha -\text{P}_{\theta_0}\{T(X) > c\} }{\text{P}_{\theta_0}\{T(X) = c\} } \\ 由 X_i \sim b(1,p) 知 T(X)=\sum_{i=1}^{100}{X_i} \sim b(100,p) ，故\text{P}_{\theta_0}(T(X)=k) =\text{C}_{100}^{k}0.01^k 0.99^{100-k}, \\ 则 \text{P}_{\theta_0}(T(X) \geqslant c) =\sum_{k \geqslant c}^{100}{\text{C}_{100}^{k}0.01^k 0.99^{100-k}}.
+
+% 易算得， \text{P}_{\theta_0}(T(X) \geqslant 3) =0.0794 ， \text{P}_{\theta_0}(T(X) \geqslant 4) =0.0184 ，
+
+% 故 c=3 ， r=\frac{0.05 -0.0184}{0.0794-0.0184} = 0.5180 ，是为UMPT.
+
+%     3.6 （定理3.7的推广）设概率密度族 \left\{ p(x;\theta):\theta \in \Theta \subseteq R \right\} 关于 X 具有非降MLR. 试证明：
+%     (1) 若 X_{1}, \cdots, X_{n} 是来自该MLR分布族的一个样本，并且 \psi(x_{1}, \cdots, x_{n}) 关于每一个 x_i 都是非降的，则 \text{E}_{\theta}\psi(X_{1}, \cdots, X_{n}) 是 \theta 的一个非降函数；
+%     (2) 若函数 \psi(x) 具有性质：存在点 x_0 使得在 x<x_0 时， \psi(x) \leqslant 0 ，而在 x > x_0 时， \psi(x) \geqslant 0 ，则 \text{E}_{\theta}\psi(X) 或者总是正的，或者总是负的，或者存在点 \theta_0 使得在 \theta<\theta_0 时， \text{E}_{\theta}\psi(X) \leqslant 0 ，而在 \theta > \theta_0 时， \text{E}_{\theta}\psi(X) \geqslant 0.
+
+% 证：
+
+% (1) 依定理3.7画瓢. 设 \theta_{1}<\theta_{2} ，令 A=\left\{x: p\left(x ; \theta_{1}\right)<p\left(x ; \theta_{2}\right)\right\},B=\left\{x: p\left(x ; \theta_{1}\right)>p\left(x ; \theta_{2}\right)\right\}. \\ 对任意的 x_{i 1} \in A 和 x_{i 2} \in B ，i=1,2 \cdots, n ，有 \lambda\left(x_{i 1}\right)=\frac{p\left(x ; \theta_{2}\right)}{p\left(x ; \theta_{1}\right)}>1, \; \lambda\left(x_{i 2}\right)=\frac{p\left(x ; \theta_{2}\right)}{p\left(x ; \theta_{1}\right)}<1, \\ 因为似然比 \lambda(x) 是 X 的非降函数，则
+
+% 由 \lambda\left(x_{i 1}\right)>\lambda\left(x_{i 2}\right) 可以推出 x_{i 1} \geqslant x_{i 2} ， i=1,2 \cdots, n .
+
+% 由于 \psi\left(x_{1}, \cdots, x_{n}\right) 关于每一个 x_{i} 都是非降的，所以 \psi\left(x_{11}, x_{21}, \cdots, x_{n 1}\right) \geqslant \psi\left(x_{12}, x_{22}, \cdots, x_{n 2}\right). \\ 令 a=\inf \left\{\psi\left(x_{1}, \cdots, x_{n}\right): x_{i} \in A, i=1,2 \cdots, n\right\}, \\ b=\sup \left\{\psi\left(x_{1}, \cdots, x_{n}\right): x_{i} \in B, i=1,2 \cdots, n\right\}, 则有 a \geqslant b . 从而 \begin{aligned} \text{E}&_{\theta_{2}} \psi\left(X_{1}, \cdots, X_{n}\right)-\text{E}_{\theta_{1}} \psi\left(X_{1}, \cdots, X_{n}\right) \\ &=\int \psi\left(x_{1}, \cdots, x_{n}\right)\left[p\left(x ; \theta_{2}\right)-p\left(x ; \theta_{1}\right)\right] \text{d} \mu(x) \\ &\geqslant a \int_{A}\left[p\left(x ; \theta_{2}\right)-p\left(x ; \theta_{1}\right)\right] \text{d} \mu(x)+b \int_{B}\left[p\left(x ; \theta_{2}\right)-p\left(x ; \theta_{1}\right)\right] \text{d} \mu(x), \end{aligned}
+
+% 由于 \int_{A \cup B}\left[p\left(x ; \theta_{2}\right)-p\left(x ; \theta_{1}\right)\right] \text{d} \mu(x)=0 ，
+
+% 所以 \int_{B}\left[p\left(x ; \theta_{2}\right)-p\left(x ; \theta_{1}\right)\right] \text{d} \mu(x)=-\int_{A}\left[p\left(x ; \theta_{2}\right)-p\left(x ; \theta_{1}\right)\right] \text{d} \mu(x) ，
+
+% 从而\begin{aligned} &\text{E}_{\theta_{2}} \psi\left(X_{1}, \cdots, X_{n}\right)-\text{E}_{\theta_{1}} \psi\left(X_{1}, \cdots, X_{n}\right) \\ &\geqslant (a-b) \int_{A}\left[p\left(x ; \theta_{2}\right)-p\left(x ; \theta_{1}\right)\right] \text{d} \mu(x) \geqslant 0. \end{aligned} \\所以 \text{E}_{\theta} \psi\left(X_{1}, \cdots, X_{n}\right) 是 \theta 的一个非降函数.
+
+% (2) 不妨先设 \theta_0<\theta ，记在 x_0 处的似然比 \lambda_0=\lambda(x_0)=\frac{p\left(x_0 ; \theta\right)}{p\left(x_0 ; \theta_{0}\right)} \geqslant 0 ，
+
+% 因为似然比 \lambda(x) 是 X 的非降函数，则：
+
+% A. 在 x<x_0 时可以推出 \lambda(x) \leqslant \lambda(x_0) ， 即 p\left(x ; \theta\right) \leqslant \lambda_0p\left(x ; \theta_{0}\right) ，又因为在 x<x_0 时 \psi(x) \leqslant 0，故 \psi(x)p\left(x ; \theta\right) \geqslant \psi(x)\cdot \lambda_0p\left(x ; \theta_{0}\right) .
+
+% B. 在 x>x_0 时可以推出 \lambda(x) \geqslant \lambda(x_0) ， 即 p\left(x ; \theta\right) \geqslant \lambda_0p\left(x ; \theta_{0}\right) ，又因为在 x>x_0 时 \psi(x) \geqslant 0，故 \psi(x)p\left(x ; \theta\right) \geqslant \psi(x)\cdot \lambda_0p\left(x ; \theta_{0}\right) .
+
+% 因此，总有 \psi(x)p\left(x ; \theta\right) \geqslant \psi(x)\cdot \lambda_0p\left(x ; \theta_{0}\right) ，故\begin{aligned} \text{E}_{\theta}\psi(X) &=\int_{-\infty}^{\infty}\psi(x)p(x;\theta)\text{d}\mu(x) \\ &\geqslant \lambda_0 \int_{-\infty}^{\infty}\psi(x)p(x;\theta_0)\text{d}\mu(x) =\lambda_0 \text{E}_{\theta_0}\psi(X). \end{aligned} \\ 由于 \lambda_0 \geqslant 0 ，因此这意味着在 \theta_0 的右侧（ \theta>\theta_0 ），\text{E}_{\theta}\psi(X) 和 \text{E}_{\theta_0}\psi(X) 同号或者 \text{E}_{\theta_0}\psi(X)=0 ， \text{E}_{\theta}\psi(X) \geqslant 0 .
+
+% 反过来，若 \theta_1<\theta_0 ，则 \text{E}_{\theta_1}\psi(X)\leqslant\lambda_0 \text{E}_{\theta_0}\psi(X) ，
+
+% 由于 \lambda_0 \geqslant 0 ，因此这意味着在 \theta_0 的左侧（ \theta<\theta_0 ），\text{E}_{\theta_1}\psi(X) 和 \text{E}_{\theta_0}\psi(X) 同号或者 \text{E}_{\theta_0}\psi(X)=0 ， \text{E}_{\theta}\psi(X) \leqslant 0 .
+
+% 直观上看，由于 \text{E}_{\theta} \psi(X) 是 \theta 的一个非降函数，上述分析粗略地（是因为这里忽略了 \theta_0 是正负无穷大的情况）表明，只能有 \text{E}_{\theta_0}\psi(X)=0 ，且在 \theta_0 的左侧（ \theta<\theta_0 ）， \text{E}_{\theta}\psi(X) \leqslant 0 ；在 \theta_0 的右侧（ \theta>\theta_0 ）， \text{E}_{\theta}\psi(X) \geqslant 0.
+
+% 用数学语言规范表述，可设 \theta_0=\inf \left\{ \theta: \text{E}_\theta\psi(X) \geqslant 0 \right\} ，由于 \text{E}_{\theta} \psi(X) 是 \theta 的一个非降函数，则：
+
+% 若 \theta_0=-\infty ，则 \text{E}_{\theta}\psi(X) \geqslant 0 ；若 \theta_0=\infty ，则 \text{E}_{\theta}\psi(X) \leqslant 0 ；
+
+% 若 -\infty<\theta_0<\infty ，在 \theta<\theta_0 时， \text{E}_{\theta}\psi(X) \leqslant 0 ；在 \theta > \theta_0 时， \text{E}_{\theta}\psi(X) \geqslant 0.
+
+%     3.7 设 X 和 Y 的密度函数分别为 f(x) 和 g(y) ，试证明：若 f(x)/g(x) 是 x 的非降函数，则 \text{E}(X) \geqslant \text{E}(Y) .
+
+% 证：
+
+% 依定理3.7画瓢. 令 A=\{x: f(x)>g(x)\},B=\{x: f(x)<g(x)\} .
+
+% 对任意的 x_1 \in A 和 x_{2} \in B ，有 \lambda\left(x_{1}\right)=\frac{f(x_1)}{g(x_1)}>1, \lambda\left(x_{2}\right)=\frac{f(x_2)}{g(x_2)}<1 .
+
+% 因为 \lambda(x) =\frac{f(x)}{g(x)} 是 x 的非降函数，则由 \lambda\left(x_{1}\right)>\lambda\left(x_{2}\right) 可以推出 x_{1} \geqslant x_{2} .
+
+% 令 a=\inf \left\{x: x \in A\right\}, b=\sup \left\{x: x \in B\right\}，则有 a \geqslant b .
+
+% 从而 \begin{aligned} \text{E}X-\text{E}Y&=\int_R x[f(x)-g(x)]\text{d}x\\ &=\int_A x[f(x)-g(x)]\text{d}x +\int_B x[f(x)-g(x)]\text{d}x\\ &\geqslant a \int_{A}[f(x)-g(x)]\text{d}x+b \int_{B}[f(x)-g(x)]\text{d}x, \end{aligned} \\
+
+% 由于 \int_{A \cup B}[f(x)-g(x)] \text{d} x=0 ，
+
+% 所以 \int_{B}[f(x)-g(x)]\text{d}x=-\int_{A}[f(x)-g(x)]\text{d}x ，
+
+% 从而 \text{E}X-\text{E}Y \geqslant (a-b) \int_{A}[f(x)-g(x)]\text{d}x \geqslant 0，即证.
+
+%     3.8 设 X=\left(X_{1}, \cdots, X_{n}\right) 是来自带有位置参数的指数分布总体的样本. 总体的密度函数为 p(x ; \theta)=\left\{\begin{array}{ll} \exp \{-(x-\theta)\}, & x \geqslant \theta \\ 0, & \text { 其它 } \\ \end{array}\right. \\ 考虑如下的检验问题：原假设 H_{0}: \theta=0 对备择假设 H_{1}: \theta>0 . 试构造水平为 \alpha(0<\alpha<1) 的UMPT. 
+
+% 解：
+
+% 样本的联合密度函数为p\left(x_{1}, \cdots, x_{n} ; \theta\right)=\left\{ \begin{array}{ll} \exp \left\{-\left(\sum_{i=1}^{n} x_{i}-n \theta\right)\right\}, & x_{(1)} \geqslant \theta \\ 0, & \text { 其它 } \\ \end{array} \right. \\ 对于 \theta_1<\theta_2 ，似然比\begin{aligned} \lambda(x)&=\frac{p\left(x_{1}, \cdots, x_{n} ; \theta_2\right)}{p\left(x_{1}, \cdots, x_{n} ; \theta_1\right)}\\ &= \frac{\exp \left\{-\left(\sum_{i=1}^{n} x_{i}-n \theta_2\right)\right\}}{\exp \left\{-\sum_{i=1}^{n} x_{i}-n \theta_1\right\}}=\left\{\begin{array}{ll} \exp \{n (\theta_2-\theta_1)\}, & x_{(1)} \geqslant \theta_2>\theta_1 \\ 0, & \text{其它} \end{array}\right. \end{aligned} \\ 知 \lambda(x) 是 T(x)=x_{(1)} 的非降函数，即该概率密度族关于 T(x)=x_{(1)} 具有MLR.
+
+% 由定理3.8推论1°(1)，存在水平为 \alpha 的UMPT的检验函数 \phi(x)=\left\{\begin{array}{ll} 1, & x_{(1)} \geqslant c \\ 0, & x_{(1)}<c \end{array}\right.
+
+% 其中 c 由 \text{E}_{0}\phi(x_{(1)})=\alpha 确定，以下求 c .
+
+% x_{(1)} 的密度函数为 p_{\theta}(y)=\left\{\begin{array}{ll}n\exp\{n(\theta-y)\}, & y \geqslant \theta \\ 0, & y<\theta \end{array}\right.
+
+% 则 \text{E}_{0}\phi(x_{(1)})=\int_{c}^{\infty}\phi(y)p_0(y)\text{d}y=\alpha ，即 \int_{c}^{\infty}n\exp\{-ny\}\text{d}y=\alpha ，
+
+% 解得 c=-\ln \alpha/n ，故 \phi(x)=\left\{\begin{array}{ll}1, & x_{(1)} \geqslant-\ln \alpha/n, \\ 0, & x_{(1)}<-\ln \alpha/n.\end{array}\right.
+
+%     3.9 设 X=(X_{1},\cdots,X_{10}) 是来自Pareto分布总体的样本. Pareto分布的密度函数为
+%     p(x ; \theta)=\left\{\begin{array}{ll} \frac{\beta}{\theta} \cdot\left(\frac{\theta}{x}\right)^{\beta+1}, & x \geqslant \theta \\ 0, & \text { 其他 } \end{array}\right. \\
+%     其中 \beta=2 已知. 考虑如下检验问题：原假设 H_{0}: \theta=1 对备择假设 H_{1}: \theta>1 . 试构造水平 \alpha=0.1 的UMPT.
+
+% 解：
+
+% 已知 \beta=2 ，则样本的联合密度函数为： p(x ; \theta)=\prod_{i=1}^{10} \frac{\beta}{\theta} \cdot\left(\frac{\theta}{x_{i}}\right)^{\beta+1}=\frac{2^{10} . \theta^{20}}{\prod_{i=1}^{10} x_{i}^{3}}, \; x_{(1)} \geqslant \theta_{0} \\ 对于 \theta_{1}<\theta_{2} , 似然比 \lambda\left(x_{1}, \cdots, x_{10} \right)=\frac{p\left(x ; \theta_{2}\right)}{p\left(x ; \theta_{1}\right)}=\left\{\begin{array}{ll} \left({\theta_{2}}/{\theta_{1}}\right)^{20}, & x_{(1)} \geqslant \theta_{2} >\theta_{1}, \\ 0, & \text{其它} \end{array}\right. \\ 知 \lambda(x) 是 T(x)=x_{(1)} 的非降函数，即该概率密度族关于 T(x)=x_{(1)} 具有MLR.
+
+% 由定理3.8可知，存在水平为 \alpha=0.1 的UMPT的检验函数 \phi(x)=\left\{\begin{array}{ll} 1, & x_{(1)} \geqslant c \\ 0, & x_{(1)}<c \end{array}\right.
+
+% 其中 c 由 \text{E}_{0}\phi(x_{(1)})=\alpha 确定，以下求 c .
+
+% x_{(1)} 的密度函数为 p_{\theta}(y)=\left\{\begin{array}{ll}{2n\theta^{2n}}/{y^{2n+1}}, & y \geqslant \theta \\ 0, & y<\theta \end{array}\right.
+
+% 则 \text{E}_{0}\phi(x_{(1)})=\int_{c}^{\infty}\phi(y)p_0(y)\text{d}y=\alpha ，即 \int_{c}^{\infty}\frac{2n}{y^{2n+1}}\text{d}y=\alpha ，
+
+% 解得 c= (1/\alpha)^{1/2n} ，代入 n=10 ， \alpha=0.1 得 c=10^{1/20}=\sqrt[20]{10} ，故 \phi(x)=\left\{\begin{array}{ll}1, & x_{(1)} \geqslant 10^{1/20}, \\ 0, & x_{(1)}< 10^{1/20}.\end{array}\right. \\
+
+%     3.10 设 T(x) 的密度函数如(3.26)所示，即为 p(t;\theta)=c(\theta)\cdot \exp\{\theta \cdot t\} \cdot h(t). \\ 试证明 \text{E}_\theta[T]=-\frac{c'(\theta)}{c(\theta)} .
+
+% 证：
+
+% 密度函数取对数，有 \ln p(t ; \theta)=\ln c(\theta)+\theta \cdot t+\ln h(t) ，
+
+% 对参数 \theta 求导，有 \frac{\partial \ln p(t ; \theta)}{\partial \theta}=\frac{c^{\prime}(\theta)}{c(\theta)}+t ，
+
+% 等式两边分别对 t 取期望，得 \text{E}_{\theta} \left[ \frac{\partial \ln p(t ; \theta)}{\partial \theta} \right]=\frac{c^{\prime}(\theta)}{c(\theta)}+\text{E}_{\theta}[T]
+
+% 由于 T 的密度函数属于C-R正则族，故 \text{E}_{\theta} \left[ \frac{\partial \ln p(t ; \theta)}{\partial \theta} \right]=0，
+
+% 或者亦可直接计算（仍然需要利用C-R正则族的性质，即定义2.8和定义2.9）：\begin{aligned} \text{E}_{\theta} \left[ \frac{\partial \ln p(t ; \theta)}{\partial \theta} \right]&=\int_{-\infty}^{+\infty} \frac{\partial \ln p(t ; \theta)}{\partial \theta} \cdot p(t ; \theta) \text{d} t \\ &=\int_{-\infty}^{+\infty} \frac{1}{p(t ; \theta)} \cdot \frac{\partial p(t ; \theta)}{\partial \theta} \cdot p(t ; \theta) \text{d} t \\ &=\int_{-\infty}^{+\infty} \frac{\partial p(t ; \theta)}{\partial \theta} \text{d} t=\frac{\partial }{\partial \theta}\int_{-\infty}^{+\infty} p(t ; \theta) \text{d} t=\frac{\partial 1}{\partial \theta}=0. \end{aligned} \\ 故 \frac{c'(\theta)}{c(\theta)}+\text{E}_{\theta}(T)=0 ，则 \text{E}_\theta[T]=-\frac{c'(\theta)}{c(\theta)} ，即证.
+
+

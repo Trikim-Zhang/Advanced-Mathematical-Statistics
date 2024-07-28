@@ -1,0 +1,183 @@
+\section{点估计}
+\subsection{基本概念}
+\begin{definition}[点估计]
+    设参数$\theta$，$X$为样本，用统计量$\hat{\theta}(X)$作为未知参数$\theta$的“猜测”称为点估计。
+\end{definition}
+该估计的均方误差MSE为
+\[
+    \begin{array}{ll}
+        \operatorname{MSE}(\hat{\theta}) &= \mathrm{E}(\hat{\theta}(X)-\theta)^2=\mathrm{E}\{[\hat{\theta}(X)-\mathrm{E}(\hat{\theta}(X))]-[\theta-\mathrm{E}(\hat{\theta}(X))]\}^2\\
+        &=\mathrm{E}[\hat{\theta}(X)-\mathrm{E}(\hat{\theta}(X))]^2 + \mathrm{E}[\theta-\mathrm{E}(\hat{\theta}(X))]^2\\
+        &=\operatorname{var}(\hat{\theta}) + \operatorname{bias}(\hat{\theta})
+    \end{array}
+\]
+\subsection{无偏估计及UMVUE}
+\subsubsection{无偏估计}
+\begin{definition}[无偏估计]
+    设$(\mathscr{X},\mathscr{B},\{P_{\theta},\theta\in\Theta\})$为可控参数统计结构，$g(\theta)$是未知参数，$X = (X_1,\cdots,X_n)$是来自该统计结构的一个样本，若用$\hat{g}(X)$估计$g(\theta)$，且
+    \[
+        \operatorname{E}_{\theta}(\hat{g}(X)) = g(\theta),\forall \theta\in\Theta
+    \]
+    则称$\hat{g}(X)$为$g(\theta)$的无偏估计。
+\end{definition}
+\begin{remark}
+    关于无偏估计，我们有三点需要说明
+    \begin{enumerate}
+        \item 无偏估计不一定存在
+        \item 对可估参数，无偏估计一般不唯一
+        \item 无偏估计并不一定是一个好估计
+    \end{enumerate}
+\end{remark}
+
+\subsubsection{UMVUE}
+\begin{definition}
+    设$g(\theta)$是可估参数，$T(X)\in U_g$，若对于$\forall \phi(X)\in U_g$有
+    \[
+        \operatorname{var}_{\theta}T(X)\leq \operatorname{var}_{\theta}\phi(X),\forall \theta\in\Theta
+    \]
+    则称$T(X)$是$g(\theta)$的一致最小方差无偏估计（UMVUE）。
+\end{definition}
+\begin{lemma}
+    设$S(X)$是分布族$\left\{ p_{\theta},\theta\in\Theta \right\}$的充分统计量，$\phi(X)$是$g(\theta)$的无偏估计，令$T(X) = \operatorname{E}(\phi(X)|S(X))$，则$T(X)$也是$g(\theta)$的无偏估计，且$\operatorname{var}T(X)\leq \operatorname{\phi}(X)$
+\end{lemma}
+\begin{remark}
+    求UMVUE的方法
+    \begin{enumerate}
+        \item 寻找充分完备统计量的函数$S(X)$，使其属于$U_g$
+        \item 任取$\hat{g}(X)\in U_g$，令$T(X) = \operatorname{E}(\hat{g}(X)|S(X))$
+    \end{enumerate}
+\end{remark}
+\begin{example}
+    设$X = (X_1,\cdot,X_n)$是来自$b(1,\theta),\theta\in(0,1)$的一个样本，由指数组性质知，$S(X)=\sum X_i$是充分完备统计量。
+    \begin{enumerate}
+        \item 对$\theta$，因为$E(S(X)) = n\theta$，则$\bar{X} = S(X)/n$是$\theta$的无偏估计，从而也$\theta$的UMVUE。
+        \item 对于$g(\theta) = \theta^k + (1-\theta)^{n-k},0\leq k\leq n$，如何找$g(\theta)$的UMVUE?
+    \end{enumerate}
+    对于$g(\theta) = \theta^k + (1-\theta)^{n-k},0\leq k\leq n$，先找一个$g(\theta)$的无偏估计$\phi(X)$。令
+    \[
+        \phi_1(X)=\begin{cases}1,&\sum\limits_{i=1}^kX_i=k\\0,&others\end{cases},\quad
+        \phi_2(X)=\begin{cases}1,&\sum\limits_{i=k+1}^nX_i=0\\0,&others\end{cases}
+    \]
+    又令$\phi(X) = \phi_1(X) + \phi_2(X)$，则
+    \[
+        \operatorname{E}(\phi(X)) = \operatorname{E}(\phi_1(X))+\operatorname{E}(\phi_2(X)) = \theta^k + (1-\theta)^{n-k} = g(\theta)
+    \]
+    所以$\phi(X)\in U_g$。故而$T(X) = \operatorname{E}(\phi(X)|S(X))$是$g(\theta)$的UMVUE。
+    当$k\leq s$时，
+    \[
+        \begin{array}{l}
+            \operatorname{E}(\phi_1(X)|S(X)) = P(\phi_1(X) = 1|S(X) = s)\\
+            =\dfrac{P(\phi_1(X) = 1,S(X) = s)}{P(S(X) = s)} = \dfrac{P(\sum\limits_{i=1}^kX_i=k,\sum\limits_{i = k+1}^{n}X_i = s-k)}{P(\sum\limits_{i = 1}^{n}X_i = s)}\\
+            =\dfrac{\theta^k\cdot C_{n-k}^{s-k}\theta^{s-k}(1-\theta)^{n-s}}{C_{n}^{s}\theta^k(1-\theta)^{n-k}} = \dfrac{C_{n-k}^{s-k}}{C_{n}^{s}} 
+        \end{array}   
+    \]
+    当$k\geq s$，$\operatorname{E}(\phi_1(X)|S(X)) = 0$。
+
+    同理，当$k\geq s$时，$\operatorname{E}(\phi_2(X)|S(X)) = \dfrac{C_{k}^{s}}{C_{n}^{s}}$
+    
+    当$k < s$时，$\operatorname{E}(\phi_2(X)|S(X)) = 0$。
+
+    因此，$g(\theta)$的UMVUE为
+    \[
+        T(X) = \left\{
+            \begin{array}{ll}
+                \dfrac{C_{n-k}^{s-k}}{C_{n}^{s}} & k\leq s\\
+                \dfrac{C_{k}^{s}}{C_{n}^{s}} & k>s
+            \end{array}
+        \right.
+    \]
+\end{example}
+\begin{example}
+    设$X_1,\cdots,X_n$是来自总体$X$的几何分布，其概率分布为$P_{\theta}(X = x) = (1-\theta)^x\theta,x = 0,1,\cdots,$。试求$\theta$的UMVUE。
+
+    对于$\phi(X)$
+    \[
+        \phi(X) = \left\{
+            \begin{array}{ll}
+                1, & X_{1} = 0 \\
+                0, & others
+            \end{array}
+        \right.
+    \]
+    有$\operatorname{E}(\phi(X)) = P_{\theta}(X_1 = 1) = (1-\theta)^0\theta = \theta$。且$\sum_{i = 1}^{n}X_i\sim Nb(n;s,\theta)$服从负二项分布。
+    因此，
+    \[
+        \begin{array}{l}
+            \operatorname{E}(\phi(X)|S(X)) = P(\phi(X) = 1|S(X) = s)\\
+            =\dfrac{P(\phi_1(X) = 1,S(X) = s)}{P(S(X) = s)} = \dfrac{P(X_1=0,\sum\limits_{i = 2}^{n}X_i = s)}{P(\sum\limits_{i = 1}^{n}X_i = s)}\\
+            =\dfrac{\theta C_{s+n-2}^{n-2}\theta^{n-2}(1-\theta)^{s}}{C_{s+n-1}^{n-1}\theta^{n-1}(1-p)^{s}} = \dfrac{n-1}{s+n-1}\\
+        \end{array}   
+    \]
+\end{example}
+\begin{example}
+    设$X_1,\cdot,X_n$独立同分布，均服从区间$(0,\theta),\theta>0$上的均匀分布，样本为$X = \left( X_1,\cdots,X_n \right)$。求参数$g(\theta) = \theta^2$的UMVUE。
+
+    首先，我们知道$X_{(n)}$是为一个完全充分统计量。
+
+    \textbf{直接方法}：找到一个合适的$X_{(n)}$的函数$\phi(X_{(n)})$，使得$\phi(X_{n})$称为$g(\theta) = \theta^2$的无偏估计，即$E_{\theta}(\phi(X_{n})) = \theta^2$。为此，首先注意到$X_{(n)}$的概率密度函数为
+    \[
+        p(t;\theta) = \left\{
+            \begin{array}{ll}
+                n\dfrac{t^{n-1}}{\theta^n}, & 0<t<\theta\\
+                0, others
+            \end{array}
+        \right.
+    \]
+    我们看一下其期望
+    \[
+        E_{\theta}X_{(n)} =  n\int_{0}^{\theta}n\dfrac{t^{n-1}}{\theta^n}t  \,dx = \dfrac{n}{n+1}\theta
+    \]
+    \[
+        E_{\theta}X_{(n)}^2 =  n\int_{0}^{\theta}n\dfrac{t^{n-1}}{\theta^n}t^2  \,dt = \dfrac{n}{n+2}\theta^2
+    \]
+    于是我们就有$E_{\theta} \left( \dfrac{n+2}{n}X_{(n)}^2 \right) = \theta^2$就得到$ \dfrac{n+2}{n}X_{(n)}^2 $就是$\theta^2$的无偏估计，进而是UMVUE。
+
+    \textbf{条件期望法}：我们先找到$\theta^2$的一个无偏估计，$E_{\theta}X_{1}^2 =\int_{0}^{\theta}t^2\frac{1}{\theta} \,dt= \frac{\theta^2}{3}$，课件$3X_{1}^2$是$\theta^2$的一个无偏估计，进而求期望$E_{\theta}\left[ 3X_{1}^2|X_{(n)} \right]$.
+    \[
+        \begin{array}{ll}
+            E_{\theta}\left[ 3X_{1}^2|X_{(n)} =t \right]&=\dfrac{1}{n}
+            \cdot 3t^2 + (1-\dfrac{1}{n})\int_{0}^{t}3u^2\dfrac{1}{t}\, du\\
+            &=\dfrac{3t^2}{n} + \dfrac{n-1}{n}t^2\\
+            &=\dfrac{n+2}{n}t^2
+        \end{array}
+    \]
+    可见，$\dfrac{n+2}{n}X_{(n)}^2$为$\theta^2$的UMVUE
+\end{example}
+
+\subsection{极大似然估计（MLE）}
+极大似然估计在直观上可以这样解释：使得出现所选样本最大概率的分布参数的估计。
+\begin{definition}
+    设$X\sim f(x;\theta),\theta\in\Theta$，把$f(x;\theta)$是为$\theta$的哈桑农户，则称它为$X$关于$\theta$的似然函数，$L(\theta,X) = \ln f(x;\theta) = L(\theta)$称为对数似然函数，若$\hat{\theta}$满足
+    \[
+        f(x,\hat{\theta}(x)) = \max_{\theta\in\Theta}f(x;\theta)
+    \]
+    称$\hat{\theta}$为$\theta$的极大似然估计。
+\end{definition}
+\begin{example}
+    设$X_1,\cdots,X_n$是来自$b(1,\theta)$的一个样本，$0<\theta<1$
+    \[
+        l(\theta;x) = \left( \sum x_i \right)\ln \theta + \left( n - \sum x_i \right)\ln (1-\theta) 
+    \]
+    由$\dfrac{\partial l}{\partial \theta} = 0$知
+    \[
+        \hat{\theta} = \bar{x}
+    \]
+\end{example}
+\begin{remark}
+    MLE还有一个非常有吸引力的性质：如果$\hat{\theta}$是$\theta$的MLE，$g(\cdot)$为可测函数，那么$g(\hat{\theta})$也是$g(\theta)$的MLE。
+
+    对于多参数指数族$p(x;\theta) = \exp\{ \sum_{j = 1}^{k}\theta_jT_j(x)+c(\theta)+d(x) \}$，似然方程化为
+    \[
+        \sum T_{j}(x_i) = -n\dfrac{\partial c(\theta)}{\partial \theta_j}
+    \]
+\end{remark}
+\begin{theorem}[MLE的相合性]
+    设$\{ p_{\theta}(x;\theta):\theta\in\Theta \}$是可识别的，且$p_{\theta}(x;\theta)$关于$\theta$可微，则似然方程在$n\to \infty$时，以概率1有解，且此解关于$\theta$时相合的。
+\end{theorem}
+\begin{theorem}[MLE的渐进正态性]
+    在一系列正则条件下，对于$p(x;\theta)$的相合解$\hat{\theta}_{n}$，有
+    \[
+        \sqrt{n}(\hat{\theta}_n-\theta_0)\overset{L}{\to}N(0,I^{-1}(\theta_0))
+    \]
+    其中$\theta_0$为真值。
+\end{theorem}

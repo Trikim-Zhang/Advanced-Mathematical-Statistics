@@ -1,0 +1,148 @@
+\section{假设检验}
+\subsection{N-P基本引理}
+\begin{definition}[最优势检验]
+    在检验问题$(\theta_0,\theta_1)$中，若$\phi$是一个$\alpha$水平的检验，若对任意一切$\alpha$水平的检验$\phi^{\prime}$，均有$\mathrm{E}_{\theta_1}\phi(X)\geq \mathrm{E}_{\theta_1}\phi^{\prime}(X)$，则称$\phi$时最优势检验MPT。
+    \[
+        \mathrm{E}_{\theta}\phi(X) = g_{\phi}(\theta) = \left\{
+            \begin{array}{ll}
+                \alpha(\theta) & \theta\in\Theta_0\\
+                1-\beta(\theta) & \theta\in\Theta_1\\
+            \end{array}
+        \right.
+    \]
+\end{definition}
+\begin{theorem}[N-P引理]
+    对于问题$(\theta_0,\theta_1)$，设分布$p_{\theta_0},p_{\theta_1}$密度函数存在，则$\forall \alpha\in(0,1)$
+    \begin{enumerate}
+        \item 存在一个$\alpha$水平的检验$\phi$及$\lambda_0>0$使得$\phi$形如
+        \[
+            \phi(X) = \left\{
+                \begin{array}{ll}
+                    1 & p(x;\theta_1)\geq \lambda_0 p(x;\theta_0)\\
+                    0 & p(x;\theta_1)< \lambda_0 p(x;\theta_0)\\
+                \end{array}
+            \right.
+        \]
+        且$\mathrm{E}_{\theta_0}\phi(X) = \alpha$ 
+        \item 此$\phi(X)$是一个MPT
+        \item 反之，如果$\phi(X)$是水平为$\alpha$的MPT，则一定存在常数$\lambda_0\geq 0$，使得$\phi(X)$满足1
+    \end{enumerate}
+\end{theorem}
+
+\begin{example}
+    设$X_1,X_2,\cdots,X_n$来自两点分布$b(1,\theta)$的样本，对于假设问题$H_0:\theta =\dfrac{1}{2},H_1:\theta = \theta_1(\theta_1>\frac{1}{2})$，试求其最优势检验
+    
+    似然比：
+    \[
+        \lambda(X) = \dfrac{\prod_{i = 1}^{n}p(x_i;\theta_1)}{\prod_{i = 1}^{n}p(x_i;\theta_0)} = 2^n\left( \dfrac{\theta_1}{1-\theta_1} \right)^{\sum_{i = 1}^{n}x_i}(1-\theta_1)^n
+    \]
+
+    原假设成立条件下，$T = \sum_{i = 1}^{n}X_i\sim b(n,\dfrac{1}{2})$，且$\lambda(X)$是关于$T$递增的，那么$\{\lambda\geq k\} = \{T\geq c\}$
+    \[
+        \phi(X) = \left\{
+            \begin{array}{ll}
+                1 & T > c\\
+                r & T = c\\
+                0 & T < c
+            \end{array}
+        \right.
+    \]
+    \[
+        \alpha = \mathrm{E}_{\theta_0}\phi(X) = P\{T>c\} + rP(T = c) 
+    \]
+    得到$c = u_{1-\alpha_1},r = \dfrac{\alpha-\alpha_1}{G(c-0)-G(c)} = \dfrac{\alpha-\alpha_1}{F(c)-F(c-0)}$
+\end{example}
+
+\begin{example}
+    设$X_1,X_2,\cdots,X_n$来自两点分布$N(\mu,1)$的样本，对于假设问题$H_0:\mu =0,H_1:\mu = \mu_1(\mu_1>0)$，试求其最优势检验
+
+    似然比：
+    \[
+        \lambda(X) = \dfrac{\prod_{i = 1}^{n}p(x_i;\theta_1)}{\prod_{i = 1}^{n}p(x_i;\theta_0)} = \exp\{ -\dfrac{1}{2}n\mu_1^2 + \sum_{i = 1}^{n}x_i\mu \}
+    \]
+
+    原假设成立条件下，$T = \bar{X}\sim N(0,\dfrac{1}{n})$，且$\lambda(X)$是关于$T$递增的，那么$\{\lambda\geq k\} = \{T\geq c\}$
+    \[
+        \phi(X) = \left\{
+            \begin{array}{ll}
+                1 & T \geq c\\
+                0 & T < c
+            \end{array}
+        \right.
+    \]
+    \[
+        \alpha = \mathrm{E}_{\theta_0}\phi(X) = P\{T\geq c\}
+    \]
+    得到$c = \frac{u_{1-\alpha}}{\sqrt{n}}$
+\end{example}
+\begin{example}
+    设$X = (X_1,\cdots,X_n)$是来自均匀分布组$\{ R(0,\theta):\theta>0 \}$的样本，考虑如下检验问题：$H_0:\theta = 1,H_1:\theta_1 = \theta_1(\theta_1>1)$，取水平为$\alpha(0<\alpha<1)$。构造似然比统计量
+    \[
+        \lambda(X) = \dfrac{\prod_{i = 1}^{n}p(x_i;\theta_1)}{\prod_{i = 1}^{n}p(x_i;\theta_0)} = \left\{
+            \begin{array}{ll}
+                \theta_1^{-n} & 0<x_{(n)}<1\\
+                \infty & 1\leq x_{(n)} \leq \theta_1 
+            \end{array}
+        \right.
+    \]
+    $\lambda(X)$为退化分布
+
+    取非随机化检验：
+    \[
+        \phi(x) = \left\{
+            \begin{array}{ll}
+                1 & c\leq x_{(n)}<\theta_1\\
+                0 & 0<x_{(n)}<c
+            \end{array}
+        \right.
+    \]
+    原假设$H_0$成立时，$T = X_{(n)}$的密度函数为$nt^{n-1},(1<t<1)$，故由$\mathrm{E}_{\theta_0}\pi(X) = \alpha$得$c = \sqrt[n]{1-\alpha}$
+\end{example}
+\begin{example}
+    设$X = (X_1,\cdots,X_n)$是来自均匀分布组$\{ R(0,\theta):\theta>0 \}$的样本，考虑如下检验问题：$H_0:\theta = 1,H_1:\theta_1 = \theta_1(\theta_1<1)$，取水平为$\alpha(0<\alpha<1)$。构造似然比统计量
+    \[
+        \lambda(X) = \dfrac{\prod_{i = 1}^{n}p(x_i;\theta_1)}{\prod_{i = 1}^{n}p(x_i;\theta_0)} = \left\{
+            \begin{array}{ll}
+                \theta_1^{-n} & 0<x_{(n)}<\theta_1\\
+                0 & \theta_1\leq x_{(n)} < 1 
+            \end{array}
+        \right.
+    \]
+    $\lambda(X)$为退化分布
+
+    取非随机化检验：
+    \[
+        \phi(x) = \left\{
+            \begin{array}{ll}
+                1 & 0\leq x_{(n)}\leq c\\
+                0 & c< x_{(n)}<\theta_1
+            \end{array}
+        \right.
+    \]
+    原假设$H_0$成立时，$T = X_{(n)}$的密度函数为$nt^{n-1},(1<t<1)$，故由$\mathrm{E}_{\theta_0}\phi(X) = \alpha$得$c = \sqrt[n]{\alpha}$
+\end{example}
+\begin{example}
+    设$X_1,\cdots,X_n \sim U(\theta,1)$的样本，考虑如下检验问题：$H_0:\theta = 0,H_1:\theta_1 = \theta_1(\theta_1<0)$，取水平为$\alpha(0<\alpha<1)$，试求其MPT。
+    
+    构造似然比统计量
+    \[
+        \lambda(X) = \dfrac{\prod_{i = 1}^{n}p(x_i;\theta_1)}{\prod_{i = 1}^{n}p(x_i;\theta_0)} = \left\{
+            \begin{array}{ll}
+                (1-\theta_1)^{-n} & 0<x_{(1)}<1\\
+                \infty & \theta_1\leq x_{(1)} \leq 0 
+            \end{array}
+        \right.
+    \]
+    $\lambda(X)$为退化分布
+
+    取非随机化检验：
+    \[
+        \phi(x) = \left\{
+            \begin{array}{ll}
+                1 & 0 \leq x_{(1)} \leq c\\
+                0 & c < x_{(n)} < 1
+            \end{array}
+        \right.
+    \]
+    原假设$H_0$成立时，$T = X_{(1)}$的密度函数为$n(1-t)^{n-1},(1<t<1)$，故由$\mathrm{E}_{\theta_0}\phi(X) = \alpha$得$c = 1-\sqrt[n]{1-\alpha}$
+\end{example}
