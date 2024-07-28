@@ -1,0 +1,39 @@
+\section{习题3.2}
+\subsection{题目}
+\begin{frame}
+    \frametitle{题目}
+    \begin{example}{习题3.2}
+        设$ X=\left(X_{1}, \cdots, X_{n}\right) $是来自正态分布族$ \{N(0, \sigma^{2}): 0<\sigma^{2}<\infty\} $的样本，考虑原假设 $H_{0}: \sigma^{2}=1 $对备择假设 $H_{1}: \sigma^{2}=\sigma_{1}^{2}(\sigma_{1}^{2}>1)$ 的检验问题，取水平为 $\alpha(0<\alpha<1)$ ，试求其MPT.
+    \end{example}
+\end{frame}
+\subsection{解答}
+\begin{frame}[t,allowframebreaks]
+    \frametitle{解答}
+    密度函数： 
+    \[
+        p(x;\sigma^2)=(2\pi)^{-1/2}\sigma^{-1} \exp\{ {x^2}/{(2\sigma^2)} \}
+    \]
+
+    似然函数：
+    \[
+        L(x;\sigma^2)=(2\pi)^{-n/2}\sigma^{-n}\exp\{ -\sum_{i=1}^{n}{x_i^2}/{(2\sigma^2)} \}
+    \]
+    由因子分解定理知，$ T(x)=\sum_{i=1}^{n} x_{i}^{2}$ 为该分布的完备充分统计量.
+
+    构造似然比统计量： 
+    \[
+        \begin{aligned} \lambda(x)&=\frac{\prod_{i=1}^{n} p\left(x_{i} ; \sigma_{1}^{2}\right)}{\prod_{i=1}^{n} p\left(x_{i} ; \sigma_{0}^{2}\right)}=\frac{\sigma_{0}^{n}}{\sigma_{1}^{n}} \exp \left\{ \sum_{i=1}^{n} x_{i}^{2}\left(\frac{1}{2 \sigma_{0}^{2}}-\frac{1}{2 \sigma_{1}^{2}}\right) \right\} \\ &=\frac{\sigma_{0}^{n}}{\sigma_{1}^{n}} \exp \left\{ T(x)\left(\frac{1}{2 \sigma_{0}^{2}}-\frac{1}{2 \sigma_{1}^{2}}\right) \right\}, \end{aligned}
+    \]
+    $\lambda(x)$ 关于 $T(x)$ 严格单调上升，根据N-P基本引理，MPT的拒绝域形式为 \[
+        W=\{x: T(x)=\sum_{i=1}^{n} x_{i}^{2} \geqslant c\}.
+    \]
+
+    当 $H_{0}$ 成立时，$ T \sim \chi^{2}(n) $, 所以对给定的水平 $\alpha$ ， $c=\chi_{1-\alpha}^{2}(n) .$
+
+    MPT检验仅与水平 $\alpha$ 有关，而与$ \sigma_{1}^2 $的具体数值无关，只要求 $\sigma_{1}^2>1$ 就行了.
+
+    故MPT为： 
+    \[
+        \phi(x)=\left\{\begin{array}{ll} 1, & T \geqslant \chi_{1-\alpha}^{2}(n), \\ 0, & T<\chi_{1-\alpha}^{2}(n). \end{array}\right.
+    \]
+\end{frame}

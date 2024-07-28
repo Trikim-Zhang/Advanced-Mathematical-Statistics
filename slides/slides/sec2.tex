@@ -1,0 +1,86 @@
+\section{习题2.1}
+\subsection{问题}
+\begin{frame}
+    \frametitle{习题2.1}
+    \begin{example}{习题2.1}
+       设 $X_1,X_2$ 独立同分布，其共同的密度函数为 $p(x;\theta)=3x^2/\theta^3,\;0<x<\theta,\; \theta>0.$
+       \begin{enumerate}
+        \item 证明 $T_1=\frac{2}{3}(X_1+X_2)$ 和 $T_2=\frac{7}{6} \max(X_1,X_2)$ 都是$ \theta $的无偏估计；
+    
+        \item 计算 $T_1$ 和 $T_2$ 的均方误差并进行比较；
+    
+        \item 证明：在均方误差意义下，在形如 $T_c=c \max(X_1,X_2)$ 的估计中， $T_{8/7}$ 最优.
+       \end{enumerate}
+    \end{example}
+\end{frame}
+\subsection{第一问}
+\begin{frame}[c,allowframebreaks]
+    \frametitle{第一问}
+    由
+    \[
+        \operatorname{E}(X_1)=\operatorname{E}(X_2)=\int_{0}^{\theta}x\frac{3x^2}{\theta^3}dx=\frac{1}{\theta^3}\left[ \frac{3}{4}x^4\right]^{\theta}_{0}=\frac{3}{4}\theta
+    \]
+
+    得 $\operatorname{E}(T_1)=\frac{2}{3}\operatorname{E}(X_1)+\frac{2}{3}\operatorname{E}(X_2)=\frac{2}{3} \cdot \frac{3}{4}\theta \cdot 2= \theta.$
+
+    令$ Y=\max(X_1,X_2)$ ，因为 
+    \[
+        P(Y \leqslant y)=P(X_1 \leqslant y)P(X_2 \leqslant y)=P^2(X_1 \leqslant y)
+    \]
+    且有 
+    \[
+        P(X_1 \leqslant y)=\int_{0}^{y}3x^2/\theta^3dx=\frac{y^3}{\theta^3}
+    \]
+    故 $p_Y(y)=[P^2(X_1 \leqslant y)]'=\dfrac{6y^5}{\theta^6},$
+
+    则 
+    \[
+        \operatorname{E}(Y)=\int_{0}^{\theta} y \frac{6y^5}{\theta^6} dy= \frac{1}{\theta^6}\left[ \frac{6}{7}y^7 \right]_0^{\theta}= \frac{6}{7}\theta. 
+    \]
+    故 $\operatorname{E}(T_2)=\frac{7}{6}\operatorname{E}(Y)=\theta . $
+    证毕.
+\end{frame}
+\subsection{第二问}
+\begin{frame}[t,allowframebreaks]
+    \frametitle{第二问}
+    由 
+    \[
+        \operatorname{E}(X_1^2)=\operatorname{E}(X_2^2)=\int_{0}^{\theta}x^2\frac{3x^2}{\theta^3}dx=\frac{1}{\theta^3}\left[ \frac{3}{5}x^5\right]^{\theta}_{0}=\frac{3}{5}\theta^2
+    \]
+
+    得 
+    \[
+        \operatorname{Var}(X_1)=\operatorname{Var}(X_2)=\operatorname{E}(X_1^2)-\operatorname{E}^2(X_1)=\frac{3}{5}\theta^2-\left[ \frac{3}{4}\theta \right]^2=\frac{3}{80}\theta^2
+    \]
+    故 
+    \[
+        \operatorname{Var}(T_1)=\frac{4}{9}\operatorname{Var}(X_1)+\frac{4}{9}\operatorname{Var}(X_2)=\frac{4}{9} \cdot \frac{3}{80}\theta^2 \cdot 2=\frac{1}{30}\theta^2.
+    \]
+
+    由 
+    \[
+        \operatorname{E}(Y^2)=\int_{0}^{\theta}y^2\frac{6y^5}{\theta^6}dy=\frac{1}{\theta^6}\left[ \frac{6}{8}y^8\right]^{\theta}_{0}=\frac{3}{4}\theta^2
+    \]
+
+    得 
+    \[
+        \operatorname{Var}(Y)=\operatorname{E}(Y^2)-\operatorname{E}^2(Y)=\frac{3}{4}\theta^2-\left[ \frac{6}{7}\theta \right]^2=\frac{3}{4 \cdot 49}\theta^2,
+    \]
+
+    故$ \operatorname{Var}(T_2)=\frac{49}{36}\operatorname{Var}(Y)=\frac{1}{48}\theta^2.$
+
+    故有 
+    \[
+        \operatorname{MSE}(T_1)=\operatorname{Var}(T_1)=\frac{1}{30}\theta^2>\frac{1}{48}\theta^2=\operatorname{Var}(T_2)=\operatorname{MSE}(T_2).
+    \]
+\end{frame}
+\subsection{第三问}
+\begin{frame}[t,allowframebreaks]
+    \frametitle{第三问}
+    由 $\operatorname{E}(T_c)=c\operatorname{E}(Y)$，有
+
+    \[
+        \begin{aligned} \operatorname{MSE}(T_c)&=\operatorname{E}(T_c-\theta)^2=\operatorname{Var}(T_c)+\operatorname{E}^2(T_c-\theta) \\ &=c^2\operatorname{Var}(Y)+[c\operatorname{E}(Y)-\theta]^2 \\ &=c^2\frac{3}{4 \cdot 49}\theta^2 +[c \frac{6}{7}\theta-\theta]^2 \\ &=\left[ \frac{3}{4 \cdot 49}c^2+ \left( \frac{6}{7}c -1 \right)^2\right] \theta^2 \\ &=\left[ \frac{3}{4}c^2-\frac{12}{7}c+1 \right] \theta^2, \end{aligned} 
+    \]
+     故当 $c=-\dfrac{-\frac{12}{7}}{2\cdot\frac{3}{4}}=\frac{8}{7}$ 时，上述 $\operatorname{MSE}(T_c)$ 取得最小值 $\dfrac{1}{49}\theta^2 $. 证毕.
+\end{frame}

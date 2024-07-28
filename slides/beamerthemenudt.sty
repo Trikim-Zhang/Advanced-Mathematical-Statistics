@@ -1,0 +1,1774 @@
+% This is file `beamerthemenudt.sty'.
+%
+% Provide options:
+%   MathFont = LM | XITS
+%   BlockDisplay = colorful | followtheme | allgrey
+%   CodeDisplay = listing | minted
+%   MintedStyle = lightmode | darkmode | <custom>
+%   ColorDisplay = JXred | BSblue
+%   LanguageMode = cn | en
+%   BIBMode = biber | none
+%   BIBStyle = biber-gb7714
+%   ContentMuticols = true | false
+%   Background = true | false
+%
+% 本文件为 NUDT_Beamer_Slide-demo 宏包文件.
+% !请勿轻易改动此文档中代码.
+%%%% ----------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{beamerthemenudt}[2022/03/10 v1.2a, NUDT Beamer Theme(Main Theme)]
+%%%% ----------------------------------------------------------------
+
+% ----------------
+% Declare of Commands
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
+% ----------------
+\def\mycopyright{\vspace{2ex}Copyright\enspace\copyright\enspace2021-2022 by Zhang Xinhang.}% 版权声明.
+\def\kvtcb@label@sep{:}% tcolorbox 中 label 分隔符.
+
+% 定义执行命令. 修改自 sjtubeamer.
+\def\EqualOptionsBeamer{%
+  \relax\fi\ifEqualOptionsBeamer%
+}
+\def\ifEqualOptionsBeamer#1#2{%
+% #1: Option - Key.
+% #2: Option - Value.
+  \newif\ifoption@tmp%
+  \edef\optionkey@tmp{%
+    \csname beamer@nudt@#1\endcsname%
+  }%
+  \edef\optionvalue@tmp{#2}%
+  \ifx\optionkey@tmp\optionvalue@tmp\option@tmptrue%
+  \else\option@tmpfalse\fi%
+  \ifoption@tmp%
+}
+
+% 定义命令写法. 修改自 lshort-zh-cn.
+\DeclareRobustCommand*\cmd[1]{\alert{\texttt{\char`\\#1}}}
+\DeclareRobustCommand*\env[1]{\alert{\texttt{#1}}}
+\DeclareRobustCommand*\pkg[1]{\alert{\textsf{#1}}}
+\DeclareRobustCommand*\cls[1]{\alert{\textsf{#1}}}
+\DeclareRobustCommand*\marg{\@ifstar\@marg\@margmeta}
+\DeclareRobustCommand*\oarg{\@ifstar\@oarg\@oargmeta}
+\DeclareRobustCommand*\Arg[1]{\@meta{#1}}
+\def\@oarg#1{\textcolor{nudtgrey}{\texttt{[#1]}}}
+\def\@oargmeta#1{\@oarg{\@meta{#1}}}
+\def\@marg#1{\texttt{\{#1\}}}
+\def\@margmeta#1{\@marg{\@meta{#1}}}
+\def\@meta#1{$\m@th\langle$\textnormal{\textit{#1}}$\m@th\rangle$}
+% ----------------
+
+% ----------------
+% Declare of Options
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
+% CMD:: \DeclareOptionBeamer  - 声明参数.
+% CMD:: \ExecuteOptionsBeamer - 预执行参数.
+% CMD:: \ProcessOptionsBeamer - 处理参数.
+% ----------------
+% 定义新的 if.
+\newif\ifbeamer@nudt@contentmuticols
+
+% KEY:: MathFont.
+% VALUE:: XITS | LM.
+\DeclareOptionBeamer{MathFont}{\def\beamer@nudt@MathFont{#1}}
+% KEY:: BlockDisplay.
+% VALUE:: colorful | followtheme | allgrey.
+\DeclareOptionBeamer{BlockDisplay}{\def\beamer@nudt@BlockDisplay{#1}}
+% KEY:: CodeDisplay.
+% VALUE:: minted | listing.
+\DeclareOptionBeamer{CodeDisplay}{\def\beamer@nudt@CodeDisplay{#1}}
+% KEY:: MintedStyle [BASED:: CodeDisplay].
+% VALUE:: lightmode | darkmode | <custom>.
+\DeclareOptionBeamer{MintedStyle}{\def\beamer@nudt@MintedStyle{#1}}
+% KEY:: ColorDisplay [PASSTO:: beamercolorthemenudt.sty].
+% VALUE:: JXred | BSblue.
+\DeclareOptionBeamer{ColorDisplay}{\PassOptionsToPackage{ColorDisplay=#1}{beamercolorthemenudt}}
+% KEY:: LanguageMode.
+% VALUE:: cn | en.
+\DeclareOptionBeamer{LanguageMode}{\def\beamer@nudt@LanguageMode{#1}}
+% KEY:: BIBMode.
+% VALUE:: biber | none.
+\DeclareOptionBeamer{BIBMode}{\def\beamer@nudt@BIBMode{#1}}
+% KEY:: BIBStyle [BASED:: CodeDisplay].
+% VALUE:: biber-gb7714.
+\DeclareOptionBeamer{BIBStyle}{\def\beamer@nudt@BIBStyle{#1}}
+\DeclareOptionBeamer{ContentMuticols}{\csname beamer@nudt@contentmuticols#1\endcsname}
+% \DeclareOptionBeamer{Background}{\csname beamer@nudt@background#1\endcsname}
+
+%\PassOptionsToClass{aspectratio=169}{beamer}
+
+\ExecuteOptionsBeamer{%
+  MathFont=LM,%
+  BlockDisplay=colorful,%
+  CodeDisplay=listing,%
+  ColorDisplay=JXred,%
+  LanguageMode=cn,%
+  BIBMode=biber,%
+  ContentMuticols=true,%
+}
+\ProcessOptionsBeamer
+\if\EqualOptionsBeamer{CodeDisplay}{minted}%
+  \ExecuteOptionsBeamer{MintedStyle=lightmode}%
+\fi
+\if\EqualOptionsBeamer{BIBMode}{biber}%
+  \ExecuteOptionsBeamer{BIBStyle=biber-gb7714}
+\fi
+\ProcessOptionsBeamer
+% ----------------
+
+% ----------------
+% Declare of Packages
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
+% ----------------
+% CMD:: \RequirePackage - 调用宏包.
+% ----------------
+\if\EqualOptionsBeamer{LanguageMode}{cn}
+  \RequirePackage[fontset=none]{ctex}% ctex: 提供统一的 LaTeX 中文文档框架.
+\else\if\EqualOptionsBeamer{LanguageMode}{en}
+  \RequirePackage[fontset=none, scheme=plain]{ctex}% ctex: 提供统一的 LaTeX 中文文档框架.
+\fi\fi
+\RequirePackage{fontspec}% fontspec: 字体设置.
+% \RequirePackage{unicode-math}% unicode-math: OpenType 数学字体.
+\RequirePackage{tikz}% tikz: 绘制图像.
+\usetikzlibrary{turtle}
+\RequirePackage{comment}% comment: 提供注释环境.
+\RequirePackage{xparse}% xparse: 指定命令参数.
+\RequirePackage{hyperref}
+\RequirePackage{varioref}% varioref: 交叉引用.
+\if\EqualOptionsBeamer{LanguageMode}{en}%
+  \PassOptionsToPackage{english}{cleveref}
+\fi
+\RequirePackage{cleveref}% cleveref: 交叉引用.
+\RequirePackage{tcolorbox}% tcolorbox: 绘制彩色文本框.
+\if\EqualOptionsBeamer{CodeDisplay}{minted}%
+  % minted 临时文件存储在 mintedbuild 文件夹
+  \PassOptionsToPackage{outputdir=mintedbuild}{minted}
+  \RequirePackage{minted}% minted: 代码高亮.
+  \tcbuselibrary{skins, breakable, xparse, listings, minted}
+  \PackageWarningNoLine{beamerthemenudt}{%
+    Option [CodeDisplay=minted] is loaded. %
+    Please add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
+\else\if\EqualOptionsBeamer{CodeDisplay}{listing}%
+  \tcbuselibrary{skins, breakable, xparse, listings}
+  \PackageWarningNoLine{beamerthemenudt}{%
+    Option [CodeDisplay=listing] is loaded. %
+    If you have configured Python environment, %
+    you are recommended to set [CodeDisplay=minted] option and %
+    install Pygments through pip. %
+    Additionally, add `-shell-escape' and `-8bit' parameters to XeLaTeX.}
+\fi\fi
+\RequirePackage{ifthen}% ifthen: 控制结构语句.
+\RequirePackage{fontawesome}% fontawesome: 提供可缩放矢量图标.
+\RequirePackage{tabularx}% tabularx: 智能表格环境.
+\if\EqualOptionsBeamer{BIBMode}{biber}%
+  \PassOptionsToPackage{backend=biber}{biblatex}% 后端 biber 引擎.
+  \if\EqualOptionsBeamer{BIBStyle}{biber-gb7714}%
+    \PassOptionsToPackage{autolang=hyphen,%
+      style=gb7714-2015,%
+      gbalign=gb7714-2015,%style=gb7714-2015ms
+      gbnamefmt=lowercase,
+      gbstyle=false, url=false, doi=false, isbn=false,backref=true,%
+      sorting=none}{biblatex}%
+  \fi
+  \RequirePackage{biblatex}% biblatex: 参考文献.
+\else\if\EqualOptionsBeamer{BIBMode}{none}%
+  \relax
+\fi\fi
+% ----------------
+
+\mode<presentation>
+
+% ----------------
+% Some Settings
+% ----------------
+%\hyperref{urlcolor=nudtgreen}
+% 调整左右边距.
+\setbeamersize{text margin left=0.036\paperwidth, text margin right=0.036\paperwidth}
+% 设置目录深度为 2 (显示至 subsection).
+\setcounter{tocdepth}{2}
+% 设置图片路径为项目文件夹下 `image' `images' `figure' `figures'.
+\graphicspath{{image/}{images/}{figure/}{figures/}{resources/}}
+% 半透明化尚未出现的内容.
+% \setbeamercovered{transparent}
+% 导航栏为空.
+\beamertemplatenavigationsymbolsempty
+% ----------------
+
+% ----------------
+% Theme Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
+% 包含外部主题, 内部主题, 颜色主题.
+% ----------------
+% 颜色主题 - nudt.
+\usecolortheme{nudt}
+% 内部主题 - rounded (圆形边框).
+\useinnertheme{rounded}
+% 取消 itemize 环境编号.
+\setbeamertemplate{itemize items}[circle]
+% 设置 enumerate 环境编号为圆形.
+\setbeamertemplate{enumerate items}[circle]
+% 设置目录中章节编号为圆形.
+\setbeamertemplate{sections/subsections in toc}[circle]
+% 图标题编号.
+\setbeamertemplate{caption}[numbered]
+% 定理标题编号.
+\setbeamertemplate{theorems}[numbered]
+% 设置 blocks 区块为 rounded (圆形边框).
+\setbeamertemplate{blocks}[rounded]
+% 压缩模式.
+\beamer@compresstrue
+% ----------------
+
+% ----------------
+% Length Define
+% ----------------
+% A paper width for the footline.
+\newlength{\halfpaperwidth}
+% The left margin.
+\newlength{\headingleftmargin}
+% Paper width minus margins.
+\newlength{\headingwidthminusmargins}
+% Height of the heading block.
+\newlength{\headingheight}
+% Height of the footer block.
+\newlength{\footerheight}
+% The height for the titlepageheader in the title page.
+\newlength{\titlepageheaderheight}
+% The height for the footer in the title page.
+\newlength{\titlepagefooterheight}
+% The height for the main title block.
+\newlength{\titlepagemaintitleblockheight}
+% The height for the subtitle block.
+\newlength{\titlepagesubtitleblockheight}
+% The height for the name and date block.
+\newlength{\titlepagenamedateblockheight}
+% The height for the institution block.
+%\newlength{\titlepageinstitutionheight}
+% The lengths for spacing between name and date.
+\newlength{\titlepagespaceundername}
+\newlength{\titlepagespaceunderdate}
+
+% The length for the light thin bar.
+\setlength{\headingleftmargin}{0.05573\paperwidth}
+\setlength{\headingwidthminusmargins}{\paperwidth}
+\addtolength{\headingwidthminusmargins}{-\headingleftmargin}
+\setlength{\headingheight}{0.1\paperheight}
+\setlength{\footerheight}{0.09017\paperheight}
+
+\setlength{\titlepageheaderheight}{0.2\paperheight}
+\setlength{\titlepagefooterheight}{0.0\paperheight}
+\setlength{\titlepagemaintitleblockheight}{0.16\paperheight}
+\setlength{\titlepagesubtitleblockheight}{0.1\paperheight}
+\setlength{\titlepagenamedateblockheight}{0.36\paperheight}
+
+\setlength{\titlepagespaceundername}{16pt}
+\setlength{\titlepagespaceunderdate}{4pt}
+% ----------------
+
+% ----------------
+% Background Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
+% 设置了页眉 logo.
+% ----------------
+% 设置 "NUDTname.pdf" 为图片 "logo".
+\pgfdeclareimage[width=7em]%
+  {lg}{./resources/NUDTname.pdf}
+% \pgfdeclareimage[width=3.5em]%
+%   {lg}{./resources/NUDTname.png}
+\pgfdeclareimage[width=\paperwidth]%
+  {bgoftitle}{./resources/bg3.pdf}
+% ----------------
+
+% ----------------
+% Font Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/31), v1.2a(2022/03/10).
+% ----------------
+% 设置了主题数学字体选项 "mathdisplay=XITS" & "mathdisplay=LM".
+% ----------------
+%\newfontfamily\cmcsc{cmcsc10.mf}
+%\def\scshape{\cmcsc}
+%\setmainfont[SmallCapsFont]{cmcsc10.mf}
+% 设置无衬线字体为 Computer Modern Unicode Bright 字体族(Opentype 格式).
+\setsansfont{CMU Sans Serif}
+\usefonttheme[onlymath]{serif}
+
+% 数学字体设置.
+% \if\EqualOptionsBeamer{MathFont}{XITS}%
+%   % 数学字体 - XITS Math.
+%   \setmathfont{XITS Math}
+% \else\if\EqualOptionsBeamer{MathFont}{LM}%
+%   % 数学字体 - Latin Modern Math.
+%   \setmathfont{Latin Modern Math}
+% \fi\fi
+
+% 设置中文无衬线字体为项目文件夹下 "fonts" 中 "simkai.ttf" (楷体), 加粗为 "simhei.ttf" (黑体).
+%\setCJKsansfont[Path="fonts/",BoldFont={simhei.ttf}]{simkai.ttf}
+\RequirePackage{xeCJK}
+\setCJKmainfont[Scale=0.956]{Microsoft YaHei}
+%\setCJKsansfont{LXGWWenKai-Bold.ttf}[Path="fonts/",Scale=0.956,BoldFont={SourceHanSansSC-Medium.otf}]
+%\usefonttheme{professionalfonts}
+% ----------------
+
+% ----------------
+% Font Sizes Layout
+% ----------------
+% 幻灯标题字体设置.
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\scriptsize,series=\bfseries}
+% 封页字体设置.
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{subtitle}{size=\footnotesize,series=\bfseries}
+\setCJKfamilyfont{fangzheng}{fangzheng.ttf}
+\newcommand{\fangzheng}{\CJKfamily{fangzheng}}
+\setbeamerfont{author}{size=\normalsize,family=\fangzheng}
+\setbeamerfont{date}{size=\scriptsize}
+
+\setbeamerfont{block title}{size=\normalsize}
+\setbeamerfont{structure}{size=\normalsize,series=\bfseries}
+% 脚注字号设置.
+\setbeamerfont{footnote}{size=\scriptsize}
+% 页眉页脚字体设置.
+\setbeamerfont{section in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{subsection in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{institute in head/foot}{size=\scriptsize,series=\bfseries}
+\setbeamerfont{author in head/foot}{size=\tiny,series=\bfseries}
+\setbeamerfont{title in head/foot}{size=\tiny,series=\mdseries}
+\setbeamerfont{framenumber in head/foot}{size=\scriptsize,series=\bfseries}
+% itemize 环境序号设置.
+\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+\setbeamertemplate{itemize subsubitem}{\scriptsize\raise1.25pt\hbox{\textbullet}}
+% ----------------
+
+% ----------------
+% Bibliography Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
+% ----------------
+\if\EqualOptionsBeamer{BIBMode}{biber}%
+  % 参考文献 bib 库.
+  \addbibresource[location=local]{refs/ref.bib}
+  % 参考文献设置.
+  \beamertemplatetextbibitems
+  % 设置 bibliography 列表为 text 显示模式.
+  \setbeamertemplate{bibliography item}[text]
+  % 设置 bibitem 间距.
+  \setlength{\bibitemsep}{0.75ex}
+  % 参考文献目录字号设置为6号.
+  \renewcommand*{\bibfont}{\footnotesize}
+\fi
+% 设置参考文献脚注引用.
+\newcommand{\footfullcitetext}[2][]{%
+  \footnotetext{\fullcite[#1]{#2}}}
+% ----------------
+
+% ----------------
+% Mini-frames Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.1a(2021/12/31).
+% Updated in v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
+% 参考了: https://tex.stackexchange.com/questions/314847/beamer-theme-antibes-plus-navigation-bar-with-circles-for-subsections/314961#314961.
+% ----------------
+% 计数器 - 小节起始页.
+\newcount\beamer@subsectionstartframe
+\beamer@subsectionstartframe=2
+% 使用 etoolbox 宏包修改 `beamerbasesection.sty' 中 \beamer@subsection 命令.
+\apptocmd{\beamer@subsection}{%
+  \addtocontents{nav}{\protect\headcommand{%
+    \protect\beamer@subsectionframes{%
+      \the\beamer@subsectionstartframe%
+    }{\the\c@framenumber}%
+  }}%
+}{}{}
+\apptocmd{\beamer@subsection}{%
+  \beamer@subsectionstartframe=\c@framenumber\relax%
+}{}{}
+% document 结束时设置 \headcommand 写入项. (\noexpand 表示不展开命令)
+\AtEndDocument{%
+  \immediate\write\@auxout{\string\@writefile{nav}{%
+    \noexpand\headcommand{%
+      \noexpand\beamer@subsectionframes{%
+        \the\beamer@subsectionstartframe%
+      }{\the\c@framenumber}%
+    }%
+  }}%
+}{}{}
+% 定义小节结束页命令. (实际此处设置为后续小节起始帧, document 结束时设置为结束帧)
+\def\beamer@subsectionendframe{2}
+\def\beamer@subsectionframes#1#2{%
+  \ifnum\c@framenumber<#1%
+  \else%
+    \ifnum\c@framenumber>#2%
+    \else%
+      \gdef\beamer@subsectionendframe{#2}%
+    \fi%
+  \fi%
+}
+% 按照 beamer 方式储存命令.
+\newcommand\insertsubsectionendframe{\beamer@subsectionendframe}
+% 计数器 - 小节中当前幻灯帧数.
+\newcounter{subsectioncurrentframe}
+% 计数器 - 小节中总幻灯帧数.
+\newcounter{subsectiontotalframes}
+% 长度 - 迷你帧间距.
+\newlength{\beamer@nudt@miniframesspace}
+% #1: 迷你帧间距 - 小节幻灯帧数不大于10.
+% #2: 迷你帧间距 - 小节幻灯帧数大于10且不大于15.
+% #3: 迷你帧间距 - 小节幻灯帧数大于15.
+\def\insertsubsectionminiframes#1#2#3{%
+  % 小节当前幻灯帧数设置.
+  \setcounter{subsectioncurrentframe}{\insertframenumber}%
+  \addtocounter{subsectioncurrentframe}{1}%
+  \addtocounter{subsectioncurrentframe}{-\beamer@subsectionstartpage}%
+  % 小节总幻灯帧数设置.
+  \setcounter{subsectiontotalframes}{\insertsubsectionendframe}%
+  \addtocounter{subsectiontotalframes}{0}%
+  \addtocounter{subsectiontotalframes}{-\beamer@subsectionstartpage}%
+  % 迷你帧间距设置.
+  \ifnum\c@subsectiontotalframes>15%
+    \setlength{\beamer@nudt@miniframesspace}{#3}%
+  \else\ifnum\c@subsectiontotalframes>10%
+    \setlength{\beamer@nudt@miniframesspace}{#2}%
+  \else%
+    \setlength{\beamer@nudt@miniframesspace}{#1}%
+  \fi\fi%
+  % foreach 循环控制 mini-frames 输出.
+  \hbox{%
+    \ifnum\c@subsectiontotalframes>1%
+      \foreach \i in {1,...,\c@subsectiontotalframes}{%
+        \usebeamercolor{mini frame}%
+        % 帧数小于当前帧, 则输出实心圆, 否则输出空心圆.
+        \ifnum\i<\numexpr\c@subsectioncurrentframe+1%
+          \hskip\beamer@nudt@miniframesspace%
+          \usebeamertemplate{mini frame}%
+        \else%
+          \hskip\beamer@nudt@miniframesspace%
+          \usebeamertemplate{mini frame in current section}%
+        \fi%
+      }%
+    \fi%
+  }%
+}
+% ----------------
+
+% ----------------
+% Tikz Def Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
+\newdimen\beamer@nudt@sectionbar
+\if\EqualOptionsBeamer{LanguageMode}{cn}%
+  \beamer@nudt@sectionbar=0.71\paperwidth%
+\else\if\EqualOptionsBeamer{LanguageMode}{en}%
+  \beamer@nudt@sectionbar=0.52\paperwidth%
+\fi\fi
+
+% 页眉样式定义.
+\def\beamer@nudt@tikz@headline#1#2#3{%
+% #1: 辅助显示颜色.
+% #2: 辅助显示颜色.
+% #3: 辅助显示颜色.
+  \begin{tikzpicture}[overlay, remember picture]
+    \draw [fill=#1, draw=none] (current page.north east)%
+      rectangle ++ (-.5em, -.8ex);
+    \draw [fill=#3, draw=none] (current page.north east) ++ (0, -2ex)%
+      rectangle ++ (-.5em, -3.5ex);
+    \draw [fill=white, draw=none] (current page.north east) ++ (-.5em, 0)%
+      rectangle ++ (-.5em, -.8ex);
+    \draw [fill=black, draw=none] (current page.north east) ++ (-.5em, -2ex)%
+      rectangle ++ (-.5em, -3.5ex);
+    \draw [fill=#2, draw=none] (current page.north east) ++ (-1em, 0)%
+      rectangle ++ (-\dimexpr1.1\paperwidth-\beamer@nudt@sectionbar\relax, -.8ex);
+    \draw [fill=#1, draw=none, rounded corners=2pt] (current page.north west) ++ (0, .15ex)%
+      [turtle={%
+        rt, fd=\beamer@nudt@sectionbar,%
+        rt=135, fd=6.6ex,%
+        rt=45, fd=\dimexpr\beamer@nudt@sectionbar-1.6em\relax,%
+        home%
+      }];
+    
+    \node [anchor=north west, xshift=.5em, yshift=-.1ex, align=left] at (current page.north west) {%
+      \usebeamerfont{section in head/foot}\usebeamercolor[fg]{section in head/foot}%
+      \if\EqualOptionsBeamer{LanguageMode}{cn}%
+        \hskip-1em\insertsectionnavigationhorizontal{.69\paperwidth}{}{}%
+      \else\if\EqualOptionsBeamer{LanguageMode}{en}%
+        \insertsectionhead%
+      \fi\fi%
+    };
+    \node [anchor=north east, xshift=-1.2em, yshift=-.5ex] at (current page.north east) {%
+      \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
+      \insertsubsectionhead%
+    };
+    \node [anchor=north east, xshift=-1.2em, yshift=-3.75ex] at (current page.north east) {%
+      \usebeamerfont{subsection in head/foot}\usebeamercolor[fg]{subsection in head/foot}%
+      \insertsubsectionminiframes{1.8pt}{1.5pt}{1.2pt}\hspace*{.1em}%
+    };
+  \end{tikzpicture}%
+}
+
+% 计数器 - 幻灯页数.
+\newcount\beamer@progressbar@currentframe% auxiliary counter
+\newcount\beamer@progressbar@totalframe% auxiliary counter
+% 长度.
+\newdimen\beamer@progressbar@ht% progressbar height
+\newdimen\beamer@progressbar@wd% progressbar width
+\newdimen\beamer@progressbar@tmpdim% auxiliary dimension
+% 设置长度.
+\beamer@progressbar@ht=.4ex
+\beamer@progressbar@wd=\dimexpr\paperwidth-10.5em\relax
+
+% 进度条样式定义.
+\def\beamer@nudt@tikz@progressbar#1#2#3{%
+% #1: 未放映部分颜色.
+% #2: 已放映部分颜色.
+% #3: 辅助显示颜色.
+  \beamer@progressbar@currentframe=\insertframenumber%
+  \beamer@progressbar@totalframe=\inserttotalframenumber%
+  \beamer@progressbar@tmpdim=\beamer@progressbar@wd%
+  \divide\beamer@progressbar@tmpdim by 1000%
+  \multiply\beamer@progressbar@tmpdim by \beamer@progressbar@currentframe%
+  \divide\beamer@progressbar@tmpdim by \beamer@progressbar@totalframe%
+  \multiply\beamer@progressbar@tmpdim by 1000%
+  \begin{tikzpicture}[very thin, overlay, remember picture]
+    \draw [fill=#1, draw=none] (current page.south west)%
+      rectangle ++ (1.5em, \beamer@progressbar@ht);
+    \draw [fill=#3, draw=none] (current page.south west) ++ (0, 1.6ex)%
+      rectangle ++ (1.5em, 1.4ex);
+    \draw [fill=white, draw=none] (current page.south west) ++ (1.5em, 0)%
+      rectangle ++ (.5em, \beamer@progressbar@ht);
+    \draw [fill=black, draw=none] (current page.south west) ++ (1.5em, 1.6ex)%
+      rectangle ++ (.5em, 1.4ex);
+    \draw [fill=#1, draw=none] (current page.south west) ++ (2em, 0)%
+      rectangle ++ (\beamer@progressbar@wd, \beamer@progressbar@ht);
+    \draw [fill=#2, draw=none] (current page.south west) ++ (2em, 0)%
+      rectangle ++ (\beamer@progressbar@tmpdim, \beamer@progressbar@ht);
+    
+    \node [anchor=south west, xshift=2.2em, yshift=0ex] at (current page.south west) {%
+      \usebeamerfont{author in head/foot}\usebeamercolor[fg]{author in head/foot}%
+      \insertshortauthor%
+      \enspace\rule[-.2ex]{.25em}{2ex}\enspace%
+      \usebeamerfont{title in head/foot}\usebeamercolor[fg]{title in head/foot}%
+      \insertshorttitle%
+    };
+  \end{tikzpicture}%
+}
+
+% 设置页码显示为"x / total".
+\def\insertfootlineframe{%
+  \insertframenumber%
+  \Acrobatmenu{GoToPage}{\beamer@linkspace{.275em}}%
+  /\Acrobatmenu{GoToPage}{\beamer@linkspace{.275em}}%
+  \inserttotalframenumber%
+}
+
+% 页脚样式定义.
+\def\beamer@nudt@tikz@footline#1#2{%
+% #1: 页码部分颜色.
+% #2: Logo 部分颜色.
+  \begin{tikzpicture}[overlay, remember picture]
+    \draw [fill=#1, draw=none, rounded corners=2pt] (current page.south east) ++ (-7.8em, -.15ex)%
+      [turtle={%
+        lt, fd=10em,%
+        rt=135, fd=5.4ex,%
+        rt=45, fd=8.4em,%
+        home%
+      }];
+    \draw [fill=#2, draw=none, rounded corners=2pt] (current page.south east) ++ (0, -.15ex)%
+      [turtle={%
+        lt, fd=10em,%
+        rt=135, fd=6ex,%
+        rt=45, fd=8.4em,%
+        home%
+      }];
+    
+    \node [anchor=south east, xshift=-9.6em, yshift=-.8ex] at (current page.south east) {%
+      \usebeamerfont{framenumber in head/foot}\usebeamercolor[fg]{framenumber in head/foot}%
+      \insertfootlineframe%
+    };
+    \node [anchor=south east, xshift=-.5em, yshift=0ex] at (current page.south east) {%
+      \pgfuseimage{lg}%
+    };
+  \end{tikzpicture}%
+}
+% ----------------
+
+% ----------------
+% Headline Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
+% ----------------
+% FORMAT:: section [cn - ALL; en - CURRENT] | subsection (with mini-frames).
+% ----------------
+\defbeamertemplate*{headline}{NUDT headline theme}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex]{}
+    \beamer@nudt@tikz@headline{PrimaryC}{SecondaryAuxiliaryC}{AuxiliaryC}%
+  \end{beamercolorbox}%
+}
+
+\setbeamertemplate{headline}[NUDT headline theme]
+% ----------------
+
+% ----------------
+% Frametitle Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
+% ----------------
+% FORMAT:: frametitle & framesubtitle.
+% ----------------
+%\pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]%
+%{beamer@frametitleshade}{\paperheight}%
+%{%
+%  color(0pt)=(frametitle.bg);%
+%  color(\paperwidth)=(frametitle right.bg)
+%}
+\defbeamertemplate*{frametitle}{NUDT theme}{%
+  \ifx\insertframesubtitle\@empty%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=.5ex]{}%{frametitle}
+      \textcolor{SecondaryAuxiliaryC}{\rule[-.3ex]{.25em}{2ex}\enspace}%
+      \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+      \insertframetitle%
+    \end{beamercolorbox}%
+  \else%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=4.2ex,dp=.5ex]{}%{frametitle}
+      \textcolor{SecondaryAuxiliaryC}{\rule[-.3ex]{.25em}{2ex}\enspace}%
+      \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+      \insertframetitle\par%
+      \textcolor{SecondaryAuxiliaryC}{\rule[-.18ex]{.25em}{1.6ex}\enspace}%
+      \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}%
+      \insertframesubtitle%
+    \end{beamercolorbox}%
+  \fi%
+}
+
+\setbeamertemplate{frametitle}[NUDT theme]
+% ----------------
+
+% ----------------
+% Footline Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.2a(2022/03/10), v1.3b(2022/04/13).
+% ----------------
+% FORMAT:: author | short title | pagenumber | NAME of NUDT.
+% ----------------
+\defbeamertemplate*{footline}{NUDT footline theme}{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3ex]{}
+    \beamer@nudt@tikz@progressbar{AuxiliaryC}{PrimaryC}{IntersperseC}%
+    \beamer@nudt@tikz@footline{AuxiliaryC}{PrimaryC}%
+  \end{beamercolorbox}%
+}
+
+\setbeamertemplate{footline}[NUDT footline theme]
+% ----------------
+
+% ----------------
+% Navigation Symbols Layout
+% 格式: TITLE | NAVIGATION SYMBOLS.
+% ----------------
+%\addtobeamertemplate{footline}{%
+%  \leavevmode%
+%  \hbox{%
+%    \begin{beamercolorbox}[wd=0.4\paperwidth,ht=3ex,dp=.75ex,right,rightskip=1.2em]{frametitle}%
+%      \usebeamercolor[fg]{navigation symbols}\insertslidenavigationsymbol%
+%      \insertframenavigationsymbol%
+%      \insertsubsectionnavigationsymbol%
+%      \insertsectionnavigationsymbol%
+%      \insertdocnavigationsymbol%
+%      \insertbackfindforwardnavigationsymbol%
+%    \end{beamercolorbox}%
+%  }}
+% ----------------
+
+% ----------------
+% Title Page Layout
+% ----------------
+\setbeamertemplate{title page}%
+{%  
+  
+  \begin{beamercolorbox}[sep=0cm,right,wd=0.0001\paperwidth,ht=\titlepageheaderheight,%
+    rightskip=\headingleftmargin]{pkured!5!white}
+    \vskip0.0361\titlepageheaderheight
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[center,wd=0.92\paperwidth,ht=\titlepagemaintitleblockheight,%
+    rounded=true,shadow=true]{title}
+    \usebeamerfont{title}\inserttitle
+    \vskip\titlepagespaceunderdate%
+    \usebeamerfont{subtitle}\insertsubtitle
+    \vskip\titlepagespaceunderdate%
+  \end{beamercolorbox}
+  % \vskip\titlepagespaceundername%
+  % \medskip%
+  \begin{beamercolorbox}[center,wd=\paperwidth,ht=\titlepagenamedateblockheight]{white}
+    \usebeamerfont{author}\insertauthor\\
+    \vskip\titlepagespaceunderdate%
+       \medskip%
+    \usebeamerfont{institute}\insertinstitute\\
+    \vskip\titlepagespaceunderdate%
+       \medskip%
+    \usebeamerfont{date}\insertdate\\
+    \vskip\titlepagespaceunderdate%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[center,wd=\paperwidth,ht=\titlepagefooterheight]{titlepagefooter}
+  \end{beamercolorbox}
+}
+% ----------------
+
+% ----------------
+% Tcolorbox Style Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
+% 定义了多种 Tcolorbox 盒子的基础样式. 修改自 Tcolorbox 手册.
+% ----------------
+% 盒子基础样式定义.
+% 普通盒子基础样式定义.
+\def\beamer@nudt@tcbstyle#1#2#3{%
+% #1: 关键字 - 样式类型.
+% #2: 上部颜色.
+% #3: 下部颜色.
+  \tcbset{tcb#1style/.style={%
+    enhanced jigsaw,%
+    arc=1.5mm,%
+    toprule=1mm, leftrule=1mm,%
+    boxsep=-.5mm,%
+    left=1.8mm, right=2mm, top=2.5mm,%
+    fonttitle=\normalsize\bfseries,%
+    fontupper=\usebeamercolor[fg]{nomal text},%
+    fontlower=\usebeamercolor[fg]{nomal text},%
+    frame style={%
+      upper left=#2, upper right=#2!50,%
+      lower left=#3!50, lower right=#3%
+    },%
+    interior style={white, opacity=.8},%
+    segmentation style={%
+      black, solid,%
+      opacity=.2, line width=1pt%
+    },%
+    breakable, break at=.78\textheight,%
+    pad at break=.5ex
+  }}%
+}
+
+% 定理盒子基础样式定义.
+\def\beamer@nudt@tcbstyletheo#1#2{%
+% #1: 关键字 - 样式类型.
+% #2: 颜色.
+  \tcbset{tcb#1style/.style={empty,%
+    attach boxed title to top left,%
+    boxed title style={empty,%
+%      colback=white!98!#2, opacityback=0.96, enhanced,%
+%      fuzzy shadow={-0.2mm}{0.2mm}{0mm}{0.2mm}{white!90!#2},%
+%      fuzzy shadow={0.2mm}{-0.2mm}{0mm}{0.2mm}{black!90!#2},%
+      size=minimal,%
+      toprule=2pt, top=4pt, left=1pt, right=1pt,%
+      overlay={%
+        \draw [#2, line width=2.5pt, rounded corners=1pt]%
+          ([yshift=-1pt]frame.north west) -- ([yshift=-1pt]frame.north east);
+        \draw [white!80!#2, line width=2.5pt, rounded corners=1pt]%
+          ([xshift=.25em,yshift=-1pt]frame.north west)%
+          -- ([xshift=.5em, yshift=-1pt]frame.north west);
+      },%
+    },%
+    coltitle=#2!90!black, fonttitle=\normalsize\bfseries,%
+    before=\par\medskip\noindent, vfill before first,%
+    parbox=false, boxsep=0pt,%
+    top=4pt, bottom=4pt, left=0pt, right=2mm,%
+    fontupper=\usebeamercolor[fg]{nomal text},%
+    fontlower=\usebeamercolor[fg]{nomal text},%
+    breakable, break at=.78\textheight,%
+    pad at break*=.5ex,%
+    overlay unbroken={%
+      \draw [#2, line width=1pt, rounded corners=1pt]%
+        ([yshift=-1pt]title.north east)%
+        -- ([xshift=-0.5pt,yshift=-1pt]title.north-|frame.east)%
+        -- ([xshift=-0.5pt]frame.south east) -- (frame.south west);
+      \draw [white!80!#2, line width=1pt, rounded corners=1pt]%
+        ([xshift=2em]frame.south west) -- ([xshift=5em]frame.south west);
+    },%
+    overlay first={%
+      \draw [#2, line width=1pt, rounded corners=1pt]%
+        ([yshift=-1pt]title.north east)%
+        -- ([xshift=-0.5pt,yshift=-1pt]title.north-|frame.east)%
+        -- ([xshift=-0.5pt]frame.south east);
+    },%
+    overlay middle={%
+      \draw [#2, line width=1pt, rounded corners=1pt]%
+        ([xshift=-0.5pt]frame.north east) -- ([xshift=-0.5pt]frame.south east);
+    },%
+    overlay last={%
+      \draw [#2, line width=1pt, rounded corners=1pt]%
+        ([xshift=-0.5pt]frame.north east) -- ([xshift=-0.5pt]frame.south east)%
+        -- (frame.south west);
+      \draw [white!80!#2, line width=1pt, rounded corners=1pt]%
+        ([xshift=2em]frame.south west) -- ([xshift=5em]frame.south west);
+    }%
+  }}%
+}
+
+% 代码盒子基础样式定义.
+\def\beamer@nudt@tcbstylecode#1{%
+% #1: 关键字 - 样式类型.
+% #2: 颜色.
+  \tcbset{codestyle/.style={empty,%
+    attach boxed title to top left,%
+    boxed title style={empty,%
+%      colback=white!98!#1, opacityback=0.96, enhanced,%
+%      fuzzy shadow={-0.2mm}{0.2mm}{0mm}{0.2mm}{white!90!#1},%
+%      fuzzy shadow={0.2mm}{-0.2mm}{0mm}{0.2mm}{black!90!#1},%
+      size=minimal,%
+      toprule=2pt, top=4pt, left=1pt, right=1pt,%
+      overlay={%
+        \draw [#1, line width=2.5pt, rounded corners=1pt]%
+          ([yshift=-1pt]frame.north west) -- ([yshift=-1pt]frame.north east);
+        \draw [white!80!#1, line width=2.5pt, rounded corners=1pt]%
+          ([xshift=.25em,yshift=-1pt]frame.north west)%
+          -- ([xshift=.5em, yshift=-1pt]frame.north west);
+      },%
+    },%
+    coltitle=#1!90!black, fonttitle=\normalsize\bfseries,%
+    before=\par\medskip\noindent, vfill before first,%
+    parbox=false, boxsep=0pt,%
+    top=4pt, bottom=4pt, left=1pt, right=2mm,%
+    fontupper=\usebeamercolor[fg]{nomal text},%
+    fontlower=\usebeamercolor[fg]{nomal text},%
+    breakable, break at=.78\textheight,%
+    pad at break*=.5ex,%\\
+    listing only,%
+    overlay unbroken={%
+      \draw [#1, line width=1pt, rounded corners=1pt]%
+        ([yshift=-1pt]title.north east)%
+        -- ([xshift=-0.5pt,yshift=-1pt]title.north-|frame.east)%
+        -- ([xshift=-0.5pt]frame.south east) -- (frame.south west);
+      \draw [white!80!#1, line width=1pt, rounded corners=1pt]%
+        ([xshift=2em]frame.south west) -- ([xshift=5em]frame.south west);
+      \node [anchor=north east] at ([xshift=-1.5pt,yshift=-2pt]title.north-|frame.east) {%
+        \textcolor{#1}{\normalsize ##1}%\faCode\faFileCodeO
+      };
+    },%
+    overlay first={%
+      \draw [#1, line width=1pt, rounded corners=1pt]%
+        ([yshift=-1pt]title.north east)%
+        -- ([xshift=-0.5pt,yshift=-1pt]title.north-|frame.east)%
+        -- ([xshift=-0.5pt]frame.south east);
+    },%
+    overlay middle={%
+      \draw [#1, line width=1pt, rounded corners=1pt]%
+        ([xshift=-0.5pt]frame.north east) -- ([xshift=-0.5pt]frame.south east);
+    },%
+    overlay last={%
+      \draw [#1, line width=1pt, rounded corners=1pt]%
+        ([xshift=-0.5pt]frame.north east) -- ([xshift=-0.5pt]frame.south east)%
+        -- (frame.south west);
+      \draw [white!80!#1, line width=1pt, rounded corners=1pt]%
+        ([xshift=2em]frame.south west) -- ([xshift=5em]frame.south west);
+    }%
+  }}
+}
+
+% 基础样式应用.
+\beamer@nudt@tcbstyle{rb}{nudtred}   {nudtblue}
+\beamer@nudt@tcbstyle{yg}{nudtyellow}{nudtgreen}
+\if\EqualOptionsBeamer{BlockDisplay}{colorful}%
+  \beamer@nudt@tcbstyletheo{theo}{PrimaryC}%
+  \beamer@nudt@tcbstyletheo{exa} {BlockExampleC}%
+  \beamer@nudt@tcbstyletheo{def} {BlockDefinitionC}%
+  \beamer@nudt@tcbstyletheo{lem} {BlockLemmaC}%
+  \beamer@nudt@tcbstyletheo{cond}{BlockConditionC}%
+  \beamer@nudt@tcbstylecode{PrimaryC}%
+\else\if\EqualOptionsBeamer{BlockDisplay}{followtheme}%
+  \beamer@nudt@tcbstyletheo{theo}{PrimaryC}%
+  \beamer@nudt@tcbstyletheo{exa} {PrimaryC}%
+  \beamer@nudt@tcbstyletheo{def} {PrimaryC}%
+  \beamer@nudt@tcbstyletheo{lem} {PrimaryC}%
+  \beamer@nudt@tcbstyletheo{cond}{PrimaryC}%
+  \beamer@nudt@tcbstylecode{PrimaryC}%
+\else\if\EqualOptionsBeamer{BlockDisplay}{allgrey}%
+  \beamer@nudt@tcbstyletheo{theo}{BlockExampleC}%
+  \beamer@nudt@tcbstyletheo{exa} {BlockExampleC}%
+  \beamer@nudt@tcbstyletheo{def} {BlockExampleC}%
+  \beamer@nudt@tcbstyletheo{lem} {BlockExampleC}%
+  \beamer@nudt@tcbstyletheo{cond}{BlockExampleC}%
+  \beamer@nudt@tcbstylecode{BlockExampleC}%
+\fi\fi\fi
+% ----------------
+
+% ----------------
+% Tcolorbox Layout
+% Confirmed in v1.3a.
+% ----------------
+% 定义了两个渐变样式( rb 为红蓝渐变, yg 为黄绿渐变)的 Tcolorbox.
+% #1: <可选>附加参数.
+% #2: 标题.
+% ----------------
+\newtcolorbox{nudttcbrb}[2][]{%
+  tcbrbstyle, title={#2}, #1%
+}
+\newtcolorbox{nudttcbyg}[2][]{%
+  tcbygstyle, title={#2}, #1%
+}
+% ----------------
+
+% ----------------
+% Theorem Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
+% 使用 tcolorbox 重定义定理环境, 原始的不带 nudt 前缀的定理环境仍可使用.
+% ----------------
+% 定理区块名称设置.
+\if\EqualOptionsBeamer{LanguageMode}{cn}%
+  \def\beamer@nudt@theonametheorem    {定理}
+  \def\beamer@nudt@theonameexample    {例}
+  \def\beamer@nudt@theonamealgorithm  {算法}
+  \def\beamer@nudt@theonamedefinition {定义}
+  \def\beamer@nudt@theonameaxiom      {公理}
+  \def\beamer@nudt@theonameproperty   {性质}
+  \def\beamer@nudt@theonameproposition{命题}
+  \def\beamer@nudt@theonamelemma      {引理}
+  \def\beamer@nudt@theonamecorollary  {推论}
+  \def\beamer@nudt@theonamecondition  {条件}
+  \def\beamer@nudt@theonameconclusion {结论}
+  \def\beamer@nudt@theonameassumption {假设}
+  \def\beamer@nudt@theonameremark     {注}
+  \def\beamer@nudt@theonameproof      {证明}
+  %
+  \def\beamer@nudt@theonametheorem@pl    {定理}
+  \def\beamer@nudt@theonameexample@pl    {例}
+  \def\beamer@nudt@theonamealgorithm@pl  {算法}
+  \def\beamer@nudt@theonamedefinition@pl {定义}
+  \def\beamer@nudt@theonameaxiom@pl      {公理}
+  \def\beamer@nudt@theonameproperty@pl   {性质}
+  \def\beamer@nudt@theonameproposition@pl{命题}
+  \def\beamer@nudt@theonamelemma@pl      {引理}
+  \def\beamer@nudt@theonamecorollary@pl  {推论}
+  \def\beamer@nudt@theonamecondition@pl  {条件}
+  \def\beamer@nudt@theonameconclusion@pl {结论}
+  \def\beamer@nudt@theonameassumption@pl {假设}
+  \def\beamer@nudt@theonameremark@pl     {注}
+  \def\beamer@nudt@theonameproof@pl      {证明}
+\else\if\EqualOptionsBeamer{LanguageMode}{en}%
+  \def\beamer@nudt@theonametheorem    {Theorem}
+  \def\beamer@nudt@theonameexample    {Example}
+  \def\beamer@nudt@theonamealgorithm  {Algorithm}
+  \def\beamer@nudt@theonamedefinition {Definition}
+  \def\beamer@nudt@theonameaxiom      {Axiom}
+  \def\beamer@nudt@theonameproperty   {Property}
+  \def\beamer@nudt@theonameproposition{Proposition}
+  \def\beamer@nudt@theonamelemma      {Lemma}
+  \def\beamer@nudt@theonamecorollary  {Corollary}
+  \def\beamer@nudt@theonamecondition  {Condition}
+  \def\beamer@nudt@theonameconclusion {Conclusion}
+  \def\beamer@nudt@theonameassumption {Assumption}
+  \def\beamer@nudt@theonameremark     {Remark}
+  \def\beamer@nudt@theonameproof      {Proof}
+  %
+  \def\beamer@nudt@theonametheorem@pl    {Theorems}
+  \def\beamer@nudt@theonameexample@pl    {Examples}
+  \def\beamer@nudt@theonamealgorithm@pl  {Algorithms}
+  \def\beamer@nudt@theonamedefinition@pl {Definitions}
+  \def\beamer@nudt@theonameaxiom@pl      {Axioms}
+  \def\beamer@nudt@theonameproperty@pl   {Properties}
+  \def\beamer@nudt@theonameproposition@pl{Propositions}
+  \def\beamer@nudt@theonamelemma@pl      {Lemmas}
+  \def\beamer@nudt@theonamecorollary@pl  {Corollaries}
+  \def\beamer@nudt@theonamecondition@pl  {Conditions}
+  \def\beamer@nudt@theonameconclusion@pl {Conclusions}
+  \def\beamer@nudt@theonameassumption@pl {Assumptions}
+  \def\beamer@nudt@theonameremark@pl     {Remarks}
+  \def\beamer@nudt@theonameproof@pl      {Proofs}
+\fi\fi
+
+% theorem, example, algorithm, definition, axiom, property, proposition, lemma, corollary, condition, conclusion, assumption 设置.
+% 计数器 - 定理环境.
+\newcounter{beamer@nudt@theorem@count}
+\newcounter{beamer@nudt@example@count}
+\newcounter{beamer@nudt@algorithm@count}
+\newcounter{beamer@nudt@definition@count}
+\newcounter{beamer@nudt@axiom@count}
+\newcounter{beamer@nudt@property@count}
+\newcounter{beamer@nudt@proposition@count}
+\newcounter{beamer@nudt@lemma@count}
+\newcounter{beamer@nudt@corollary@count}
+\newcounter{beamer@nudt@condition@count}
+\newcounter{beamer@nudt@conclusion@count}
+\newcounter{beamer@nudt@assumption@count}
+% 定理区块参数设置.
+\def\beamer@nudt@theo#1#2#3{%
+% #1: 后缀 - 环境名称.
+% #2: 前缀 - 样式类型.
+% #3: 前缀 - 标签.
+  % 无*环境.
+  \DeclareTColorBox[use counter=beamer@nudt@#1@count,%
+  % ##1: <可选>附加参数 - Tcolorbox.
+  % ##2: 标题.
+  % ##3: <可选>模式选择 - 带 * 即不显示区块标题头.
+  % ##4: <可选>后缀 - 标签.
+    number within=section, reset counter on overlays]%
+    {beamernudtoriginal#1}{ O{} m !s !O{} }{%
+      title={%
+        \IfBooleanTF{##3}{\ifstrempty{##2}{}{##2}}{%
+          \csname beamer@nudt@theoname#1\endcsname%
+          ~\thetcbcounter\ifstrempty{##2}{}{:~##2}%
+        }%
+      },%
+      IfValueT={##4}{label={#3\kvtcb@label@sep##4}},%
+      nameref={##2}, #2style, ##1%
+  }%
+  % 带*环境.
+  \DeclareTColorBox[no counter]%
+  % ##1: <可选>附加参数 - Tcolorbox.
+  % ##2: 标题.
+  % ##3: <可选>模式选择 - 带*即不显示区块标题头.
+  % ##4: <可选>后缀 - 标签.
+    {beamernudtoriginal#1*}{ O{} m !s !O{} }{%
+      title={%
+        \IfBooleanTF{##3}{\ifstrempty{##2}{}{##2}}{%
+          \csname beamer@nudt@theoname#1\endcsname%
+          \ifstrempty{##2}{}{:~##2}%
+        }%
+      },%
+      IfValueT={##4}{label={#3\kvtcb@label@sep##4}},%
+      nameref={##2}, #2style, ##1%
+  }%
+  \DeclareDocumentEnvironment{#1}%
+  % ##1: <可选>模式选择 - 带 * 即不显示序号 (目前已实现带星号环境不参与计数器递进).
+  % ##2: <可选>Overlay选择 - Beamer.
+  % ##3: <可选>附加参数 - Tcolorbox.
+  % ##4: 标题.
+  % ##5: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % ##6: <可选>后缀 - 标签.
+    { s D<>{1-} O{} m !s !O{} }{%
+      \begin{actionenv}<##2>%
+      \IfBooleanTF{##1}%
+        {\IfBooleanTF{##5}%
+          {\begin{beamernudtoriginal#1*}[##3]{##4}*[##6]}%
+          {\begin{beamernudtoriginal#1*}[##3]{##4}[##6]}}%
+        {\IfBooleanTF{##5}%
+          {\begin{beamernudtoriginal#1}[##3]{##4}*[##6]}%
+          {\begin{beamernudtoriginal#1}[##3]{##4}[##6]}}%
+      }{\IfBooleanTF{##1}%
+        {\end{beamernudtoriginal#1*}}%
+        {\end{beamernudtoriginal#1}}%
+      \end{actionenv}%
+  }%
+}
+\beamer@nudt@theo{theorem}    {tcbtheo}{theo}
+\beamer@nudt@theo{example}    {tcbexa} {exam}
+\beamer@nudt@theo{algorithm}  {tcbexa} {algo}
+\beamer@nudt@theo{definition} {tcbdef} {def}
+\beamer@nudt@theo{axiom}      {tcbtheo}{axio}
+\beamer@nudt@theo{property}   {tcbdef} {prope}
+\beamer@nudt@theo{proposition}{tcbdef} {propo}
+\beamer@nudt@theo{lemma}      {tcblem} {lemm}
+\beamer@nudt@theo{corollary}  {tcblem} {coro}
+\beamer@nudt@theo{condition}  {tcbcond}{cond}
+\beamer@nudt@theo{conclusion} {tcblem} {conc}
+\beamer@nudt@theo{assumption} {tcbcond}{assu}
+
+% nudtremark 设置.
+% 计数器 - 定理环境.
+\newcounter{beamer@nudt@remark@count}
+% 定理区块参数设置.
+\DeclareTColorBox[use counter=beamer@nudt@remark@count,%
+% #1: <可选>附加参数 - Tcolorbox.
+% #2: 标题.
+% #3: <可选>后缀 - 标签.
+  no counter]{beamernudtoriginalremark}{ O{} m !O{} }{%
+    title={\beamer@nudt@theonameremark%
+      \ifstrempty{#2}{}{:~#2}%
+    },%
+    IfValueT={#3}{label={rema:#3}},%
+    nameref={#2}, tcbexastyle, #1%
+}
+\DeclareDocumentEnvironment{remark}%
+% #1: <可选>Overlay选择 - Beamer.
+% #2: <可选>附加参数 - Tcolorbox.
+% #3: 标题.
+% #4: <可选>后缀 - 标签.
+  { D<>{1-} O{} m !O{} }{%
+    \begin{actionenv}<#1>%
+    \begin{beamernudtoriginalremark}[#2]{#3}[#4]%
+}{\end{beamernudtoriginalremark}\end{actionenv}}%
+
+% nudtproof 设置.
+% 计数器 - 定理环境.
+\newcounter{beamer@nudt@proof@count}
+% 定理区块参数设置.
+\providecommand\pushQED{\def\beamer@qed}
+\DeclareTColorBox[use counter=beamer@nudt@proof@count,%
+% #1: <可选>附加参数 - Tcolorbox.
+% #2: 标题.
+% #3: <可选>后缀 - 标签.
+  no counter]{beamernudtoriginalproof}{ O{} m !O{} }{%
+    title={% \@addpunct: Be intelligently omitted when punctuation is already present.
+      \ifblank{#2}{\beamer@nudt@theonameproof}{#2}\@addpunct{.}%
+    },%
+    IfValueT={#3}{label={rema:#3}},%
+    nameref={#2}, tcbexastyle, #1%
+}
+\DeclareDocumentEnvironment{proof}%
+% #1: <可选>Overlay选择 - Beamer.
+% #2: <可选>附加参数 - Tcolorbox.
+% #3: 标题.
+% #4: <可选>后缀 - 标签.
+  { D<>{1-} O{} m !O{} }{%
+    \begin{actionenv}<#1>%
+    \begin{beamernudtoriginalproof}[#2]{#3}[#4]%
+    \pushQED{\qed}%
+}{\popQED\end{beamernudtoriginalproof}\end{actionenv}}%
+% Beamer 下原始 proof 环境.
+%\renewenvironment<>{NUDTproof}[1][证明]{%
+%  \par
+%  \def\insertproofname{#1\@addpunct{.}}%
+%  \pushQED{\qed}
+%  \usebeamertemplate{proof begin}#2}
+%{\popQED\usebeamertemplate{proof end}}
+
+% -------- %
+
+\providecommand\pushQED{\def\beamer@qed}
+\DeclareTColorBox[use counter=beamer@nudt@block@count,%
+% #1: <可选>附加参数 - Tcolorbox.
+% #2: 标题.
+% #3: <可选>后缀 - 标签.
+  no counter]{beamernudtoriginalblock}{ O{} m !O{} }{%
+    title={% \@addpunct: Be intelligently omitted when punctuation is already present.
+      \ifblank{#2}{\beamer@nudt@theonameblock}{#2}\@addpunct{.}%
+    },%
+    IfValueT={#3}{label={rema:#3}},%
+    nameref={#2}, tcbexastyle, #1%
+}
+\DeclareDocumentEnvironment{block}%
+% #1: <可选>Overlay选择 - Beamer.
+% #2: <可选>附加参数 - Tcolorbox.
+% #3: 标题.
+% #4: <可选>后缀 - 标签.
+  { D<>{1-} O{} m !O{} }{%
+    \begin{actionenv}<#1>%
+    \begin{beamernudtoriginalblock}[#2]{#3}[#4]%
+    \pushQED{\qed}%
+}{\popQED\end{beamernudtoriginalblock}\end{actionenv}}%
+
+% -------- %
+
+
+% 智能引用名称定义.
+\Crefname{beamer@nudt@theorem@count}%
+  {\beamer@nudt@theonametheorem}%
+  {\beamer@nudt@theonametheorem@pl}
+\Crefname{beamer@nudt@example@count}%
+  {\beamer@nudt@theonameexample}%
+  {\beamer@nudt@theonameexample@pl}
+\Crefname{beamer@nudt@algorithm@count}%
+  {\beamer@nudt@theonamealgorithm}%
+  {\beamer@nudt@theonamealgorithm@pl}
+\Crefname{beamer@nudt@definition@count}%
+  {\beamer@nudt@theonamedefinition}%
+  {\beamer@nudt@theonamedefinition@pl}
+\Crefname{beamer@nudt@axiom@count}%
+  {\beamer@nudt@theonameaxiom}%
+  {\beamer@nudt@theonameaxiom@pl}
+\Crefname{beamer@nudt@property@count}%
+  {\beamer@nudt@theonameproperty}%
+  {\beamer@nudt@theonameproperty@pl}
+\Crefname{beamer@nudt@proposition@count}%
+  {\beamer@nudt@theonameproposition}%
+  {\beamer@nudt@theonameproposition@pl}
+\Crefname{beamer@nudt@lemma@count}%
+  {\beamer@nudt@theonamelemma}%
+  {\beamer@nudt@theonamelemma@pl}
+\Crefname{beamer@nudt@corollary@count}%
+  {\beamer@nudt@theonamecorollary}%
+  {\beamer@nudt@theonamecorollary@pl}
+\Crefname{beamer@nudt@condition@count}%
+  {\beamer@nudt@theonamecondition}%
+  {\beamer@nudt@theonamecondition@pl}
+\Crefname{beamer@nudt@conclusion@count}%
+  {\beamer@nudt@theonameconclusion}%
+  {\beamer@nudt@theonameconclusion@pl}
+\Crefname{beamer@nudt@assumption@count}%
+  {\beamer@nudt@theonameassumption}%
+  {\beamer@nudt@theonameassumption@pl}
+\Crefname{beamer@nudt@remark@count}%
+  {\beamer@nudt@theonameremark}%
+  {\beamer@nudt@theonameremark@pl}
+\Crefname{beamer@nudt@proof@count}%
+  {\beamer@nudt@theonameproof}%
+  {\beamer@nudt@theonameproof@pl}
+% ----------------
+
+% ----------------
+% Listing Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.2a(2022/03/10), v1.3a(2022/03/16).
+% ----------------
+% 定义了一个用作代码演示的 Listing, 和一个不带计数的 Listing.
+% ----------------
+% 代码区块名称设置.
+\if\EqualOptionsBeamer{LanguageMode}{cn}%
+  \def\beamer@nudt@codename{源码}
+  \def\beamer@nudt@codename@pl{源码}
+\else\if\EqualOptionsBeamer{LanguageMode}{en}%
+  \def\beamer@nudt@codename{Source Code}
+  \def\beamer@nudt@codename@pl{Source Codes}
+\fi\fi
+
+% nudtcode 设置.
+% 计数器 - 定理环境.
+\newcounter{beamer@nudt@code@count}
+% 定理区块参数设置.
+\if\EqualOptionsBeamer{CodeDisplay}{minted}%
+  \if\EqualOptionsBeamer{MintedStyle}{lightmode}%
+    \def\minted@style{default}%
+  \else\if\EqualOptionsBeamer{MintedStyle}{darkmode}%
+    \def\minted@style{rrt}%
+  \else\if\EqualOptionsBeamer{MintedStyle}{\beamer@nudt@MintedStyle}%
+    \def\minted@style{\beamer@nudt@MintedStyle}
+  \fi\fi\fi
+  \renewcommand{\theFancyVerbLine}{%
+    \sffamily\textcolor{PrimaryC}{%
+      \tiny\oldstylenums{\arabic{FancyVerbLine}}%
+  }}%
+  \DeclareTCBListing[use counter=beamer@nudt@code@count,%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 注释定界符.
+    number within=section, reset counter on overlays]%
+    {nudtcode}{ O{} m s O{} m !O{} !D''{||} }{%
+      listing engine=minted,%
+      minted style={\minted@style},%
+      minted language={#5},%
+      minted options={%
+        autogobble, tabsize=2,%
+        highlightcolor=HighlightCodeLineC,%
+        beameroverlays, escapeinside=#7,%
+        mathescape, texcl,%
+        breaklines, breakbytokenanywhere,%
+        linenos, numbersep=2pt,%
+        fontsize=\scriptsize\ttfamily, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename~\thetcbcounter%
+          \ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faCode}, #1%
+  }%
+  \DeclareTCBListing[no counter]%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 注释定界符.
+    {nudtcode*}{ O{} m s O{} m !O{} !D''{||} }{%
+      listing engine=minted,%
+      minted style={\minted@style},%
+      minted language={#5},%
+      minted options={%
+        autogobble, tabsize=2,%
+        highlightcolor=HighlightCodeLineC,%
+        beameroverlays, escapeinside=#7,%
+        mathescape, texcl,%
+        breaklines, breakbytokenanywhere,%
+        linenos, numbersep=2pt,%
+        fontsize=\scriptsize\ttfamily, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename\ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faCode}, #1%
+  }%
+  \DeclareTCBInputListing[use counter=beamer@nudt@code@count,%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 文件名.
+  % #8: 注释定界符.
+    number within=section, reset counter on overlays]%
+    {\inputcode}{ O{} m s O{} m O{} m !D''{||} }{%
+      listing file={./#7},%
+      listing engine=minted,%
+      minted style={\minted@style},%
+      minted language={#5},%
+      minted options={%
+        autogobble, tabsize=2,%
+        highlightcolor=HighlightCodeLineC,%
+        beameroverlays, escapeinside=#7,%
+        mathescape, texcl,%
+        breaklines, breakbytokenanywhere,%
+        linenos, numbersep=2pt,%
+        fontsize=\scriptsize\ttfamily, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename~\thetcbcounter%
+          \ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      % before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faFileCodeO}, #1%
+  }
+  \DeclareTCBInputListing[no counter]%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 文件名.
+  % #8: 注释定界符.
+    {\inputcodenocounter}{ O{} m s O{} m O{} m !D''{||} }{%
+      listing file={./#7},%
+      listing engine=minted,%
+      minted style={\minted@style},%
+      minted language={#5},%
+      minted options={%
+        autogobble, tabsize=2,%
+        highlightcolor=HighlightCodeLineC,%
+        beameroverlays, escapeinside=#8,%
+        mathescape, texcl,%
+        breaklines, breakbytokenanywhere,%
+        linenos, numbersep=2pt,%
+        fontsize=\scriptsize\ttfamily, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename\ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      % before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faFileCodeO}, #1%
+  }
+\else\if\EqualOptionsBeamer{CodeDisplay}{listing}%
+  \DeclareTCBListing[use counter=beamer@nudt@code@count,%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 注释定界符.
+    number within=section, reset counter on overlays]%
+    {nudtcode}{ O{} m s O{} m !O{} !D''{||} }{%
+      listing engine=listings,%
+      listing options={%
+        language={#5},%
+        breaklines, tabsize=2,%style=tcblatex,
+        columns=flexible,%
+        escapeinside=#7, texcl,%
+        numberstyle=\tiny\color{PrimaryC}\oldstylenums,%
+        basicstyle=\scriptsize\ttfamily,%
+        keywordstyle=\color{nudtred},%
+        commentstyle=\color{nudtgreen},%
+        stringstyle=\color{nudtyellow},%
+        numbers=left, numbersep=2pt,%
+        aboveskip=-2pt, belowskip=-2pt,%
+        xrightmargin=-2pt,%
+        extendedchars=true, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename~\thetcbcounter%
+          \ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faCode}, #1%
+  }%
+  \DeclareTCBListing[no counter]%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 注释定界符.
+    {nudtcode*}{ O{} m s O{} m !O{} !D''{||} }{%
+      listing engine=listings,%
+      listing options={%
+        language={#5},%
+        breaklines, tabsize=2,%style=tcblatex,
+        columns=flexible,%
+        escapeinside=#7, texcl,%
+        numberstyle=\tiny\color{PrimaryC}\oldstylenums,%
+        basicstyle=\scriptsize\ttfamily,%
+        keywordstyle=\color{nudtred},%
+        commentstyle=\color{nudtgreen},%
+        stringstyle=\color{nudtyellow},%
+        numbers=left, numbersep=2pt,%
+        aboveskip=-2pt, belowskip=-2pt,%
+        xrightmargin=-2pt,%
+        extendedchars=true, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename\ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faCode}, #1%
+  }%
+  \DeclareTCBInputListing[use counter=beamer@nudt@code@count,%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 文件名.
+  % #8: 注释定界符.
+    number within=section, reset counter on overlays]%
+    {\inputcode}{ O{} m s O{} m O{} m !D''{||} }{%
+      listing file={./#7},%
+      listing engine=listings,%
+      listing options={%
+        language={#5},%
+        breaklines, tabsize=2,%style=tcblatex,
+        columns=flexible,%
+        escapeinside=#8, texcl,%
+        numberstyle=\tiny\color{PrimaryC}\oldstylenums,%
+        basicstyle=\scriptsize\ttfamily,%
+        keywordstyle=\color{nudtred},%
+        commentstyle=\color{nudtgreen},%
+        stringstyle=\color{nudtyellow},%
+        numbers=left, numbersep=2pt,%
+        aboveskip=-2pt, belowskip=-2pt,%
+        xrightmargin=-2pt,%
+        extendedchars=true, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename~\thetcbcounter%
+          \ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      % before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faFileCodeO}, #1%
+  }
+  \DeclareTCBInputListing[no counter]%
+  % #1: <可选>附加参数 - Tcolorbox.
+  % #2: 标题.
+  % #3: <可选>模式选择 - 带 * 即不显示区块标题前缀.
+  % #4: <可选>后缀 - 标签.
+  % #5: 抄录语言.
+  % #6: <可选>附加参数 - minted.
+  % #7: 文件名.
+  % #8: 注释定界符.
+    {\inputcodenocounter}{ O{} m s O{} m O{} m !D''{||} }{%
+      listing file={./#7},%
+      listing engine=listings,%
+      listing options={%
+        language={#5},%
+        breaklines, tabsize=2,%style=tcblatex,
+        columns=flexible,%
+        escapeinside=#8, texcl,%
+        numberstyle=\tiny\color{PrimaryC}\oldstylenums,%
+        basicstyle=\scriptsize\ttfamily,%
+        keywordstyle=\color{nudtred},%
+        commentstyle=\color{nudtgreen},%
+        stringstyle=\color{nudtyellow},%
+        numbers=left, numbersep=2pt,%
+        aboveskip=-2pt, belowskip=-2pt,%
+        xrightmargin=-2pt,%
+        extendedchars=true, #6%
+      },%
+      title={%
+        \IfBooleanTF{#3}{\ifstrempty{#2}{}{#2}}{%
+          \beamer@nudt@codename\ifstrempty{#2}{}{:~#2}%
+        }%
+      },%
+      % before upper=\scriptsize{以下是文件\texttt{#7}中包含的源码:\vspace{.75ex}},%
+      IfValueT={#4}{label={code\kvtcb@label@sep#4}},%
+      nameref={#2}, codestyle={\faFileCodeO}, #1%
+  }
+\fi\fi
+
+% 智能引用名称定义.
+\Crefname{beamer@nudt@code@count}%
+  {\beamer@nudt@codename}%
+  {\beamer@nudt@codename@pl}
+% ----------------
+
+% ----------------
+% Automatic Frame Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30).
+% ----------------
+% 以下设置自动帧输出, 含封页, 小节前目录页.
+% ----------------
+% 添加封页.
+\AtBeginDocument{%
+  \begingroup%
+    \setbeamertemplate{background}{\pgfuseimage{bgoftitle}}%
+    % 取消页眉残留空白.
+    \vspace*{-\dimexpr\headheight+\topskip\relax}%
+    \begin{frame}[plain]
+      %\transfade 渐变
+      \titlepage% 显示 titlepage.
+    \end{frame}
+  \endgroup%
+}
+
+% 定义目录输入命令.
+\def\inserttableofcontent{
+  \ifbeamer@nudt@contentmuticols%
+    \begin{multicols}{2}
+      \large{
+      \tableofcontents[%
+        sectionstyle=show/shaded,%
+        subsectionstyle=show/shaded/hide,%
+        subsubsectionstyle=show/shaded/hide]}%
+    \end{multicols}
+  \else%
+  \large{
+    \tableofcontents[%
+      sectionstyle=show/shaded,%
+      subsectionstyle=show/shaded/hide,%
+      subsubsectionstyle=show/shaded/hide]}%
+  \fi%
+}
+% 小节前加目录.
+\AtBeginSubsection[]{%
+  \begingroup%
+    % \ifbeamer@nudt@background%
+    %   \setbeamertemplate{background}{\pgfuseimage{bgofsubsectoc}}%
+    % \fi%
+    \if\EqualOptionsBeamer{LanguageMode}{cn}
+      \begin{frame}{目录}
+        \inserttableofcontent%
+      \end{frame}
+    \else\if\EqualOptionsBeamer{LanguageMode}{en}
+      \begin{frame}{Outline}
+        \inserttableofcontent%
+      \end{frame}
+    \fi\fi
+  \endgroup%
+}
+% ----------------
+
+% ----------------
+% Ref Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.0a(2021/12/03).
+% Updated in v1.1a(2021/12/30), v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
+% 重定义了 \vref & \cref 命令, 实现跳转.
+% 重定义了页码计数器 page, 实现环境 frame 输出后值与计数器 framenumber 相同, 从而实现引用时页码不为 pdf 页码.
+% 定义了中文下的 varioref 和 cleveref 包的显示项. (部分具体定义未知, 故未翻译)
+% ----------------
+% 重定义 \vref & \cref.
+\let\soscref\cref % 储存 \cref 原始命令.
+\let\sosvref\vref % 储存 \vref 原始命令.
+\renewcommand{\cref}[1]{\hyperlink{#1}{\soscref{#1}}}
+\renewcommand{\vref}[1]{\hyperlink{#1}{\sosvref{#1}}}
+
+% 重定义计数器 page.
+\AtBeginEnvironment{beamer@framepauses}{\setcounter{page}{\c@framenumber}}
+
+% 定义 varioref 和 cleveref 包的中文显示项.
+\if\EqualOptionsBeamer{LanguageMode}{cn}%
+  \vref@addto\extraschinese{%
+    \def\reftextfaceafter {见\reftextvario{对}{下}页}%
+    \def\reftextfacebefore{见\reftextvario{对}{前}页}%
+    \def\reftextafter     {见\reftextvario{下}{后}页}%
+    \def\reftextbefore    {见\reftextvario{上}{前}页}%
+    \def\reftextcurrent   {见\reftextvario{本}{此}页}%
+    \def\reftextfaraway#1{见第\pageref{#1}~页}%
+    \def\reftextpagerange#1#2{见第\pageref{#1}~到第\pageref{#2}~页}%
+    \def\reftextlabelrange#1#2{\ref{#1}到~\ref{#2}}%
+    \def\vrefformat#1#2{\ref{#2}（\vpageref[#1]{#2}）}%
+    \def\Vrefformat#1#2{\Ref{#2}（\vpageref[#1]{#2}）}%
+    \def\fullrefformat#1{\ref{#1}（\reftextfaraway{#1}）}%
+    \def\vrefrangeformat#1#2#3{\reftextlabelrange{#2}{#3}%
+      （\vpagerefrange[{#1}]{#2}{#3}）}%
+  }
+    %\cref@addlanguagedefs\extraschinese{%
+    \newcommand{\crefrangeconjunction}{ 到\nobreakspace}%
+    \newcommand\crefrangepreconjunction{}%
+    \newcommand\crefrangepostconjunction{}%
+    \newcommand{\crefpairconjunction}{ 和\nobreakspace}%
+    \newcommand{\crefmiddleconjunction}{, }%
+    \newcommand{\creflastconjunction}{ 和\nobreakspace}%
+    \newcommand{\crefpairgroupconjunction}{ 和\nobreakspace}%
+    \newcommand{\crefmiddlegroupconjunction}{, }%
+    \newcommand{\creflastgroupconjunction}{, 和\nobreakspace}%
+  % crefname
+  \Crefname{framenumber}{幻灯}{幻灯}
+  \Crefname{equation}{式}{式}%
+  \Crefname{figure}{图}{图}%
+  \Crefname{subfigure}{图}{图}%
+  \Crefname{table}{表}{表}%
+  \Crefname{subtable}{表}{表}%
+  \Crefname{page}{页}{页}%
+  \Crefname{part}{Part}{Parts}%
+  \Crefname{chapter}{章}{章}%
+  \Crefname{section}{节}{节}%
+  \Crefname{subsection}{节}{节}%
+  \Crefname{subsubsection}{节}{节}%
+  \Crefname{appendix}{附录}{附录}%
+  \Crefname{subappendix}{附录}{附录}%
+  \Crefname{subsubappendix}{附录}{附录}%
+  \Crefname{subsubsubappendix}{附录}{附录}%
+  \Crefname{enumi}{点}{点}%
+  \Crefname{enumii}{点}{点}%
+  \Crefname{enumiii}{点}{点}%
+  \Crefname{enumiv}{点}{点}%
+  \Crefname{enumv}{点}{点}%
+  \Crefname{footnote}{脚注}{脚注}%
+  \Crefname{theorem}{定理}{定理}%
+  \Crefname{lemma}{引理}{引理}%
+  \Crefname{corollary}{推论}{推论}%
+  \Crefname{proposition}{命题}{命题}%
+  \Crefname{definition}{定义}{定义}%
+  \Crefname{result}{结果}{结果}%
+  \Crefname{example}{例}{例}%
+  \Crefname{remark}{注}{注}%
+  \Crefname{note}{注}{注}%
+  \Crefname{algorithm}{算法}{算法}%
+  \Crefname{listing}{代码}{代码}%
+  \Crefname{line}{Line}{Lines}%
+  %}
+\else\EqualOptionsBeamer{LanguageMode}{en}%
+  \Crefname{framenumber}{Slide}{Slides}
+\fi
+% ----------------
+
+% --------不要调用的宏包--------
+% ----------------
+%\usepackage{pstricks} % pstricks: 绘图. (请勿调用, 本模板中调用的 adjustbox 宏包与之冲突)
+%\usepackage{geometry} % geometry: 页面设置. (请勿在 Beamer 中调用)
+
+% --------宏包调用--------
+% ----------------
+\RequirePackage[autoplay]{animate}
+\RequirePackage{tikz}
+\usetikzlibrary{shadings,arrows,calc,decorations.pathmorphing,patterns}
+\tikzset{>=latex} % for LaTeX arrow head
+\usetikzlibrary{arrows.meta,decorations.pathreplacing,calligraphy,shapes.geometric,calc} % 使用tikz arrows.meta 库
+\usetikzlibrary{datavisualization.formats.functions} % 使用Tikz中的库
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{patterns}
+\newcommand{\Stars}[2][fill=yellow,draw=orange]{\begin{tikzpicture}[baseline=-0.35em,#1]
+\foreach \X in {1,...,5}
+{\pgfmathsetmacro{\xfill}{min(1,max(1+#2-\X,0))}
+\path (\X*1.1em,0) 
+node[star,draw,star point height=0.25em,minimum size=1em,inner sep=0pt,
+path picture={\fill (path picture bounding box.south west) 
+rectangle  ([xshift=\xfill*1em]path picture bounding box.north west);}]{};
+}
+\end{tikzpicture}}
+\usetikzlibrary{positioning}
+\tikzset{>=stealth}
+\RequirePackage{arydshln}
+\newcommand{\tikzmark}[3][]
+  {\tikz[remember picture, baseline]
+    \node [anchor=base,#1](#2) {#3};}
+\RequirePackage{multirow}
+\RequirePackage{array}
+\RequirePackage{amsmath,amsfonts,amssymb} % math equations, symbols
+\RequirePackage{mathtools}
+\RequirePackage[english]{babel}
+\RequirePackage{color}      % color content
+\RequirePackage{url}        % hyperlinks
+\RequirePackage{multicol,multirow}
+\RequirePackage{ulem} % ulem: 添加线.
+\RequirePackage{booktabs}
+\RequirePackage{cprotect}
+\RequirePackage{makecell}
+\RequirePackage{listings}
+\RequirePackage{subcaption}
+\RequirePackage{qrcode}
+%%%伪代码模板
+%算法宏包
+\RequirePackage{algorithm,algpseudocode}
+\RequirePackage{algorithmicx} 
+\makeatletter
+\newenvironment{breakablealgorithm}
+{
+    \begin{center}
+      \refstepcounter{algorithm}% New algorithm
+      \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+      \renewcommand{\caption}[2][\relax]{% Make a new \caption
+        %{\raggedright\textbf{\textbf{算法}~\thealgorithm} ##2\par}%
+               {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+        \ifx\relax##1\relax % #1 is \relax
+        \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+        \else % #1 is not \relax
+        \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+        \fi
+        \kern2pt\hrule\kern2pt
+      }
+    }{
+    \kern2pt\hrule\relax %\@fs@post% for \@fs@ruled
+  \end{center}
+}
+\makeatother
+%===========================================================================================
+\newcommand{\rr}{\tilde{r}_{0}} 
+\floatname{algorithm}{算法}  
+\renewcommand{\algorithmicrequire}{\textbf{输入:}}  
+\renewcommand{\algorithmicensure}{\textbf{输出:}} 
+\RequirePackage{autobreak} 
+% --------newcommand 区--------
+% 建议在此定义常用命令.
+% ----------------
+\RequirePackage{longtable}
+\RequirePackage{booktabs}
+\newcommand{\fverb}[1]{\texttt{#1}}
+\newcommand{\framecard}[1]{
+\begin{center}
+  \begin{minipage}{1\textwidth}
+    \begin{beamercolorbox}[wd=0.70\textwidth, rounded=true, shadow=true]{title}
+      \LARGE \centering \textbf{\texttt{#1}}
+    \end{beamercolorbox}
+  \end{minipage}
+\end{center}
+}
+\renewcommand{\Roman}[1]{\uppercase\expandafter{\romannumeral#1}}
+\newcommand{\pozhehao}{\kern0.2em\rule[0.8ex]{1.6em}{0.1ex}\kern0.2em}
+\newcommand{\xiaopozhe}{\kern0.2em\rule[0.8ex]{0.6em}{0.1ex}\kern0.2em}
+\RequirePackage{colortbl}
+\RequirePackage{cancel}
+%%%% ----------------------------------------------------------------
+\endinput
+%%%% ----------------------------------------------------------------
+% End of file `beamerthemenudt.sty'.

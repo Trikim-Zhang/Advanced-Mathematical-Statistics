@@ -1,0 +1,129 @@
+\section{习题1.27}
+\subsection{问题}
+\begin{frame}
+    \frametitle{习题1.27}
+    \begin{example}{1.27}
+        设 $X_1 \sim Ga(\alpha_1,\lambda),X_2\sim Ga(\alpha_2,\lambda) $，且$ X_1$ 与 $X_2$ 独立，证明：
+        \begin{enumerate}
+            \item $ Y_1=X_1+X_2 $ 与 $ Y_2=X_1/(X_1+X_2)$ 独立，且 $Y_2 \sim Be(\alpha_1,\alpha_2)$;
+            \item $Y_1=X_1+X_2 $与$ Y_3=X_1/X_2$ 独立，且 $Y_3 \sim Z(\alpha_1,\alpha_2)$ .
+        \end{enumerate}
+    \end{example}
+\end{frame}
+\subsection{第一问}
+\begin{frame}[t,allowframebreaks]
+    \frametitle{$Y_1$和$Y_2$的密度函数}
+        由 $X_1 \sim Ga(\alpha_1,\lambda),X_2\sim Ga(\alpha_2,\lambda)$ 知：
+
+        $X_1,X_2 $的联合分布为
+        \[
+            p_{X_1,X_2}(x_1,x_2)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{x_1}^{\alpha_1-1}e^{-\lambda x_1}{x_2}^{\alpha_2-1}e^{-\lambda x_2}.
+        \]
+
+        $Y_1=X_1+X_2 \sim Ga(\alpha_1+\alpha_2,\lambda)$ ，即
+        \[
+            p_{Y_1}(y_1)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1+\alpha_2)}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1}
+        \]
+        令 $U=X_1,V=\dfrac{X_1}{X_1+X_2}$ ，则 
+        \[
+            \left\{ \begin{array}{ll} X_{1}=U \\ X_{2}=U/V-U \end{array}\right.,
+        \]
+        且变换的行列式为 
+        \[
+            J= \left | \begin{array}{ccc} 1 & 0 \\ 1/v-1 & -u/v^2 \end{array} \right |=-\dfrac{u}{v^2}.
+        \]
+        $U,V$ 的联合分布为： 
+        \[
+            \begin{aligned} p_{U,V}(u,v)&=p_{X_1,X_2}(u,v)|J| \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}u^{\alpha_1-1}e^{-\lambda u}(\dfrac{u}{v}-u)^{\alpha_2-1}e^{-\lambda (u/v-u) }\dfrac{u}{v^2}, \end{aligned}
+        \]
+        
+        则$ V$ 的边缘分布为： 
+        \[
+            p_{V}(v)=\int_0^{\infty} p_{U,V}(u,v)du=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}v^{\alpha_1-1}(1-v)^{\alpha_2-1},
+        \]
+        即 $Y_2 \sim Be(\alpha_1,\alpha_2) .$
+\end{frame}
+\begin{frame}[t,allowframebreaks]
+    \frametitle{$Y_1$和$Y_2$独立性}
+        以下求 $Y_1,Y_2$ 的联合分布.
+
+        令 $U=X_1+X_2,V=\dfrac{X_1}{X_1+X_2}$ ，则 
+        \[
+            \left\{ \begin{array}{ll} X_{1}=UV \\ X_{2}=U-UV \end{array}\right., 
+        \]
+        且变换的行列式为 
+        \[
+            J= \left | \begin{array}{ccc} v & u \\ 1-v & -u \end{array} \right |=-u. 
+        \]
+        $U,V $的联合分布为：
+        \[
+            \begin{aligned} p_{U,V}(u,v)&=p_{X_1,X_2}(u,v)|J| \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{u}^{\alpha_1+\alpha_2-1}e^{-\lambda u} {v}^{\alpha_1-1}(1-v)^{\alpha_2-1}. \end{aligned}
+        \]
+
+        由
+        \[
+            \begin{array}{l}
+                p_{Y_1,Y_2}(y_1,y_2)=\\
+                \dfrac{\lambda^{\alpha_1+\alpha_2}}{\cancel{\Gamma(\alpha_1+\alpha_2)}}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1} \dfrac{\cancel{\Gamma(\alpha_1+\alpha_2)}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{y_2}^{\alpha_1-1}(1-y_2)^{\alpha_2-1},
+            \end{array}
+        \]
+        \[
+                p_{Y_1}(y_1)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1+\alpha_2)}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1}, 
+        \] 
+        \[
+                p_{Y_2}(y_2)=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}{y_2}^{\alpha_1-1}(1-{y_2})^{\alpha_2-1},
+        \]
+        显然有 $p_{Y_1,Y_2}(y_1,y_2)=p_{Y_1}(y_1)p_{Y_2}(y_2)$ ，独立性得证.
+\end{frame}
+\subsection{第二问}
+\begin{frame}[t,allowframebreaks]
+    \frametitle{$Y_3$的密度函数}
+        令$ U=X_1,V=\dfrac{X_1}{X_2}$ ，则 
+        \[
+            \left\{ \begin{array}{ll} X_{1}=U \\ X_{2}=U/V \end{array}\right.
+        \]
+        ，且变换的行列式为 
+        \[
+            J= \left | \begin{array}{ccc} 1 & 0 \\ 1/v & -u/v^2 \end{array} \right |=-\dfrac{u}{v^2}.
+        \]
+        $U,V $的联合分布为： 
+        \[
+            \begin{aligned} p_{U,V}(u,v)&=p_{X_1,X_2}(u,v)|J| \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}u^{\alpha_1-1}e^{-\lambda u} \left(\dfrac{u}{v} \right)^{\alpha_2-1}e^{-\lambda u/v }\dfrac{u}{v^2}. \end{aligned}
+        \]
+        则$ V$ 的边缘分布为： 
+        \[
+            p_{V}(v)=\int_{0}^{\infty} p_{U,V}(u,v)du=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\dfrac{v^{\alpha_1-1}}{(1+v)^{\alpha_1+\alpha_2}},
+        \]
+
+        即 $Y_3 \sim Z(\alpha_1,\alpha_2) .$
+\end{frame}
+\begin{frame}[t,allowframebreaks]
+    \frametitle{$Y_1$和$Y_3$独立性}
+    令 $U=X_1+X_2,V=\dfrac{X_1}{X_2}$ ，则 
+    \[
+        \left\{ \begin{array}{ll} X_{1}={UV}/{(1+V)} \\ X_{2}={U}/{(1+V)} \end{array}\right.
+    \]
+    ，且变换的行列式为 
+    \[
+        J= \left | \begin{array}{ccc} v/(1+v) & u/{(1+v)^2} \\ 1/(1+v) & -u/{(1+v)^2} \end{array} \right |=-\dfrac{u}{(1+v)^2}. 
+    \]
+    $U,V $的联合分布为：
+    \[
+        \begin{aligned}
+            &p_{U,V}(u,v)=p_{X_1,X_2}(u,v)|J| \\
+             &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\left(\dfrac{uv}{1+v} \right)^{\alpha_1-1}e^{-\lambda \frac{uv}{1+v} } \left(\dfrac{u}{1+v} \right)^{\alpha_2-1}e^{-\lambda \frac{u}{1+v}}\dfrac{u}{(1+v)^2}\\
+              &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}u^{\alpha_1+\alpha2-1}e^{-\lambda u } \dfrac{v^{\alpha_1-1}}{(1+v)^{\alpha_1+\alpha_2}}. 
+        \end{aligned}
+    \]
+    由
+    \[
+        \begin{aligned} p_{Y_1,Y_3}(y_1,y_3)&={y_3}^{\alpha_1-1}(1-y_3)^{\alpha_2-1} \\ &=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\cancel{\Gamma(\alpha_1+\alpha_2)}}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1} \dfrac{\cancel{\Gamma(\alpha_1+\alpha_2)}}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\dfrac{y_3^{\alpha_1-1}}{(1+y_3)^{\alpha_1+\alpha_2}}, \end{aligned} 
+    \]
+    \[
+        p_{Y_1}(y_1)=\dfrac{\lambda^{\alpha_1+\alpha_2}}{\Gamma(\alpha_1+\alpha_2)}{y_1}^{\alpha_1+\alpha_2-1}e^{-\lambda y_1},
+    \]
+    \[
+        p_{Y_3}(y_3)=\dfrac{\Gamma(\alpha_1+\alpha_2)}{\Gamma(\alpha_1)\Gamma(\alpha_2)}\dfrac{y_3^{\alpha_1-1}}{(1+y_3)^{\alpha_1+\alpha_2}},
+    \]
+    显然有 $p_{Y_1,Y_3}(y_1,y_3)=p_{Y_1}(y_1)p_{Y_3}(y_3)$ ，独立性得证.
+\end{frame}

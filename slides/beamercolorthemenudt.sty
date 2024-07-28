@@ -1,0 +1,213 @@
+% This is file `beamercolorthemenudt.sty'.
+% Copyright (C) 2021-2022 by Linrong Wu.
+% Version: 2022/04/13 v1.3b (Original Version: 2022/03/10 v1.2a).
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+%
+% 本文件为 NUDT_Beamer_Slide-demo 颜色宏包文件.
+% !请勿轻易改动此文档中代码.
+%%%% ----------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{beamercolorthemenudt}[2022/04/13 v1.3b, NUDT Beamer Theme(Color Theme)]
+%%%% ----------------------------------------------------------------
+
+% ----------------
+% Declare of Options
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16), v1.3b(2022/04/13).
+% ----------------
+% CMD:: \DeclareOptionBeamer  - 声明参数.
+% CMD:: \ExecuteOptionsBeamer - 预执行参数.
+% CMD:: \ProcessOptionsBeamer - 处理参数.
+% ----------------
+% KEY:: ColorDisplay.
+% VALUE:: JXred | BSblue.
+\DeclareOptionBeamer{ColorDisplay}{\def\beamer@nudt@ColorDisplay{#1}}
+
+\ExecuteOptionsBeamer{ColorDisplay=JXred}
+\ProcessOptionsBeamer
+% ----------------
+
+% ----------------
+% Declare of Packages
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3b(2022/04/13).
+% ----------------
+% CMD:: \RequirePackage - 调用宏包.
+% ----------------
+\RequirePackage{xcolor}% xcolor: 设置颜色.
+% ----------------
+
+% ----------------
+% Declare of Colors
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16).
+% ----------------
+%定义了主题色 nudtred, nudtgrey, 与辅助色 nudtblue, nudtgreen, nudtyellow.
+% 上述定义颜色均采用 CMYK 颜色模式.
+% 注: 常用的颜色模式有 RGB 与 CMYK, 对应 LaTeX 中 rgb(0-1小数制, x/255), RGB(原始数值), cmyk(0-1小数制, x/100).
+% ----------------
+% COLOR:: 锦绣红 - nudtred    - CMYK(12,92,95,20).
+\definecolor{nudtred}   {cmyk}{0.12,0.92,0.95,0.20}
+\colorlet{nudtred10}   {nudtred!10!white}
+\colorlet{nudtred20}   {nudtred!20!white}
+\colorlet{nudtred30}   {nudtred!30!white}
+\colorlet{nudtred40}   {nudtred!40!white}
+\colorlet{nudtred50}   {nudtred!50!white}
+\colorlet{nudtred60}   {nudtred!60!white}
+\colorlet{nudtred70}   {nudtred!70!white}
+\colorlet{nudtred80}   {nudtred!80!white}
+\colorlet{nudtred90}   {nudtred!90!white}
+
+% COLOR:: 优雅灰 - nudtgrey   - CMYK(47,37,37,20).
+\definecolor{nudtgrey}  {cmyk}{0.47,0.37,0.37,0.00}
+\colorlet{nudtgrey10}  {nudtgrey!10!white}
+\colorlet{nudtgrey20}  {nudtgrey!20!white}
+\colorlet{nudtgrey30}  {nudtgrey!30!white}
+\colorlet{nudtgrey40}  {nudtgrey!40!white}
+\colorlet{nudtgrey50}  {nudtgrey!50!white}
+\colorlet{nudtgrey60}  {nudtgrey!60!white}
+\colorlet{nudtgrey70}  {nudtgrey!70!white}
+\colorlet{nudtgrey80}  {nudtgrey!80!white}
+\colorlet{nudtgrey90}  {nudtgrey!90!white}
+
+% COLOR:: 宝石蓝 - nudtblue   - CMYK(100,60,0,15).
+\definecolor{nudtblue}  {cmyk}{1.00,0.60,0.00,0.15}
+\colorlet{nudtblue10}  {nudtblue!10!white}
+\colorlet{nudtblue20}  {nudtblue!20!white}
+\colorlet{nudtblue30}  {nudtblue!30!white}
+\colorlet{nudtblue40}  {nudtblue!40!white}
+\colorlet{nudtblue50}  {nudtblue!50!white}
+\colorlet{nudtblue60}  {nudtblue!60!white}
+\colorlet{nudtblue70}  {nudtblue!70!white}
+\colorlet{nudtblue80}  {nudtblue!80!white}
+\colorlet{nudtblue90}  {nudtblue!90!white}
+
+% COLOR:: 荷叶绿 - nudtgreen  - CMYK(100,0,90,15).
+\definecolor{nudtgreen} {cmyk}{1.00,0.00,0.90,0.15}
+\colorlet{nudtgreen10} {nudtgreen!10!white}
+\colorlet{nudtgreen20} {nudtgreen!20!white}
+\colorlet{nudtgreen30} {nudtgreen!30!white}
+\colorlet{nudtgreen40} {nudtgreen!40!white}
+\colorlet{nudtgreen50} {nudtgreen!50!white}
+\colorlet{nudtgreen60} {nudtgreen!60!white}
+\colorlet{nudtgreen70} {nudtgreen!70!white}
+\colorlet{nudtgreen80} {nudtgreen!80!white}
+\colorlet{nudtgreen90} {nudtgreen!90!white}
+
+% COLOR:: 银杏黄 - nudtyellow - CMYK(0,40,100,15).
+\definecolor{nudtyellow}{cmyk}{0.00,0.40,1.00,0.15}
+\colorlet{nudtyellow10}{nudtyellow!10!white}
+\colorlet{nudtyellow20}{nudtyellow!20!white}
+\colorlet{nudtyellow30}{nudtyellow!30!white}
+\colorlet{nudtyellow40}{nudtyellow!40!white}
+\colorlet{nudtyellow50}{nudtyellow!50!white}
+\colorlet{nudtyellow60}{nudtyellow!60!white}
+\colorlet{nudtyellow70}{nudtyellow!70!white}
+\colorlet{nudtyellow80}{nudtyellow!80!white}
+\colorlet{nudtyellow90}{nudtyellow!90!white}
+% ----------------
+
+\mode<presentation>
+
+% ----------------
+% Beamer Theme Color Mode Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.3a(2022/03/16).
+% ----------------
+% PrimaryC - 主题色;                  AuxiliaryC - 辅助色;
+% SecondaryAuxiliaryC - 第二辅助色;   IntersperseC - 点缀色;
+% NomalTextC - 普通文本色;            AlertedTextC - 强调文本色;
+% BlockExampleC - Example 区块样式色; BlockDefinitionC - Definition 区块样式色;
+% BlockLemmaC - Lemma 区块样式色;     BlockConditionC - Condition 区块样式色.
+% ----------------
+\if\EqualOptionsBeamer{ColorDisplay}{JXred}%
+    \colorlet{PrimaryC}           {nudtred}
+    \colorlet{AuxiliaryC}         {nudtgrey50}
+    \colorlet{SecondaryAuxiliaryC}{nudtgrey}
+    \colorlet{IntersperseC}       {nudtred60}
+    \colorlet{NomalTextC}         {black}
+    \colorlet{AlertedTextC}       {nudtred90}
+    \colorlet{BlockExampleC}      {nudtgrey!80!black}
+    \colorlet{BlockDefinitionC}   {nudtblue}
+    \colorlet{BlockLemmaC}        {nudtgreen}
+    \colorlet{BlockConditionC}    {nudtyellow}
+    \colorlet{HighlightCodeLineC} {nudtred10}
+\else\if\EqualOptionsBeamer{ColorDisplay}{BSblue}%
+    \colorlet{PrimaryC}           {nudtblue}
+    \colorlet{AuxiliaryC}         {nudtgrey50}
+    \colorlet{SecondaryAuxiliaryC}{nudtgrey}
+    \colorlet{IntersperseC}       {nudtblue60}
+    \colorlet{NomalTextC}         {black}
+    \colorlet{AlertedTextC}       {nudtblue90}
+    \colorlet{BlockExampleC}      {nudtgrey!80!black}
+    \colorlet{BlockDefinitionC}   {nudtred}
+    \colorlet{BlockLemmaC}        {nudtgreen}
+    \colorlet{BlockConditionC}    {nudtyellow}
+    \colorlet{HighlightCodeLineC} {nudtblue10}
+\fi\fi
+% ----------------
+
+% ----------------
+% Beamer Theme Color Layout
+% Confirmed in v1.3b(2022/04/13).
+% Established in v1.2a(2022/03/10).
+% Updated in v1.3a(2022/03/16).
+% ----------------
+% 基本颜色设置.
+\setbeamercolor{structure}{fg=PrimaryC}
+
+% 调色板颜色设置.
+\setbeamercolor{palette primary}   {fg=white, bg=PrimaryC}
+\setbeamercolor{palette secondary} {fg=black}
+\setbeamercolor{palette tertiary}  {fg=AlertedTextC}
+\setbeamercolor{palette quaternary}{fg=AuxiliaryC, bg=IntersperseC}
+
+% 页眉页脚颜色设置.
+\setbeamercolor{section in head/foot}    {parent=palette primary}
+\setbeamercolor{subsection in head/foot} {parent=structure}
+\setbeamercolor{frametitle}              {parent=structure}
+\setbeamercolor{framesubtitle}           {parent=structure}
+\setbeamercolor{author in head/foot}     {parent=structure}
+\setbeamercolor{title in head/foot}      {parent=structure}
+\setbeamercolor{framenumber in head/foot}{parent=structure}
+
+% 封页颜色设置.
+\setbeamercolor{title}          {bg=PrimaryC!10!white, fg=PrimaryC}
+\setbeamercolor{subtitle}       {bg=PrimaryC!10!white, fg=PrimaryC}
+%\setbeamercolor{author}         {fg=white,bg=}
+%\setbeamercolor{date}           {fg=white,bg=}
+\setbeamercolor{titlepageheader}{bg=white, fg=black}
+\setbeamercolor{titlepagefooter}{bg=white, fg=black}
+
+% 区块颜色设置.
+\setbeamercolor*{block title}        {parent=palette primary}
+\setbeamercolor*{block body}         {fg=, bg=nudtred40}
+\setbeamercolor*{block title example}{fg=white, bg=nudtblue}
+\setbeamercolor*{block body example} {fg=, bg=nudtblue40}
+\setbeamercolor*{block title alerted}{parent=palette primary}
+\setbeamercolor*{block body alerted} {fg=, bg=nudtred40}
+
+% 列表颜色设置.
+\setbeamercolor{item}                {parent=structure}
+\setbeamercolor{item projected}      {parent=structure}
+\setbeamercolor{enumerate item}      {parent=structure}
+\setbeamercolor{enumerate subitem}   {parent=structure}
+\setbeamercolor{enumerate subsubitem}{parent=structure}
+
+% 文本颜色设置
+\setbeamercolor*{normal text} {parent=palette secondary}
+\setbeamercolor*{alerted text}{parent=palette tertiary}
+% ----------------
+
+%%%% ----------------------------------------------------------------
+\endinput
+%%%% ----------------------------------------------------------------
+% End of file `beamercolorthemenudt.sty'.

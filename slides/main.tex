@@ -1,0 +1,56 @@
+% !BIB TS-program = biber
+% !TeX TS-program = xelatex
+% ================ %
+%      导言区      %
+% ================ %
+\documentclass[usenames,dvipsnames,svgnames,xcolor = table]{beamer}
+\usetheme[ColorDisplay=BSblue, ContentMuticols=ture]{nudt}
+% \addbibresource[location=local]{refs/ref.bib}
+% \special{dvipdfmx:config z 0} %取消PDF压缩，加快速度，最终版本生成的时候最好把这句话注释掉
+% Add option 'aspectratio=169' for 16:9 widescreen 
+% Add option  'handout' to ignore animations
+% --------title page-------- %
+\title[国防科技大学 | 高等数理统计习题课]{\LARGE 高等数理统计习题课}
+\subtitle{第三组} % subtitle 未设置页脚显示项, 请在 title 中设置.
+\author[张鑫航]{
+    汇报人：\href{mailto:zhangxinhang19@foxmail.com}{张鑫航}\\
+    \medskip
+    数学
+}
+\institute{国防科技大学}
+\date{\today}
+% ------正文区------ %
+\begin{document}
+
+% --------总目录-------- %
+% 可注释.
+\begin{frame}{目录}
+    \begin{multicols}{2}
+        \large{
+        \tableofcontents
+        }%
+      \end{multicols}
+\end{frame}
+
+% --------节: 声明------------ % 
+
+\input{slides/sec1}
+\input{slides/sec2}
+\input{slides/sec3}
+
+% --------节: 参考文献-------- %
+% \begin{frame}[allowframebreaks]{文献目录}
+%     \nocite{*}
+%     \printbibliography[heading=none]
+% \end{frame}
+
+% --------节: 致谢-------- %
+\begin{frame}{谢谢}
+    \framecard{Thank you for listening!}
+\end{frame}
+
+\begin{frame}{提问}
+    \framecard{Questions}
+\end{frame}
+
+\end{document}
